@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Bootstrap Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link type="text/css" href="css/bootstrap-timepicker.min.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-timepicker.min.js"></script>
+
+
+</head>
+<body>
+	<div class="container">
+	<h1>Please Enter your Preferences for XYZ course</h1>
+		<form role="form" class="form-horizontal">
+			<div class="form-group row" >
+				<label class="control-label col-sm-3">Slot:</label>
+				<div class="checkbox col-sm-2">
+					<label class="control-label"><input type="checkbox" name="not_slots"> Not on </label>
+				</div>
+				<div class="input-group bootstrap-timepicker timepicker col-sm-2">
+					<input id="timepicker1" type="text" class="input-small">
+					<!-- <span class="input-group-addon"><i ></i></span> -->
+				</div>
+				<div class="input-group bootstrap-timepicker timepicker col-sm-2">
+					<input id="timepicker2" type="text" class="input-small">
+					<!-- <span class="input-group-addon"><i ></i></span> -->
+				</div>
+				<script type="text/javascript">
+					$('#timepicker1').timepicker();
+					$('#timepicker2').timepicker();
+				</script>
+			</div>
+			<br/><br/>
+			<div class="form-group row">
+				<label class="control-label col-sm-3">Time of Day</label>
+				<div class="checkbox col-sm-2">
+					<label class="control-label"><input type="checkbox" name="not_slots"> Not on </label>
+				</div>
+				
+					<div class="radio col-sm-2">
+						<label class="control-label"><input type="radio" name="time0fday">Anytime</label>
+					</div>
+					<div class="radio col-sm-2">
+						<label class="control-label"><input type="radio" name="time0fday">Morning</label>
+					</div>
+					<div class="radio col-sm-2">
+						<label class="control-label"><input type="radio" name="time0fday" >Afternoon</label>
+					</div>
+			</div>
+			<br/><br/>
+			<div class="form-group row">
+				<label class="control-label col-sm-2" for="sel1">Day of week:</label>
+				<div class="checkbox col-sm-2">
+					<label class="control-label"><input type="checkbox" name="not_slots"> Not on </label>
+				</div>
+				<select multiple class="form-control col-sm-8" id="sel1">
+				<option>Anyday</option>
+				<option>Monday</option>
+				<option>Tuesday</option>
+				<option>Wednesday</option>
+				<option>Thursday</option>
+				<option>Friday</option>
+				</select>
+			</div>
+			<br/><br/>
+			<input type="submit" class="btn btn-info" name="Submit" value="Submit">
+			
+		</form>
+	</div>
+
+</body>
