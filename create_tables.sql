@@ -14,21 +14,6 @@ CREATE TABLE `config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-# Dump of table allowed
-# ------------------------------------------------------------
-
-CREATE TABLE `allowed` (
-  `course_id` char(10) NOT NULL,
-  `batch_name` varchar(30) NOT NULL,
-  `batch_dept` char(5) NOT NULL,
-  PRIMARY KEY (`course_id`,`batch_name`,`batch_dept`),
-  KEY `course_id` (`course_id`),
-  KEY `batch_name` (`batch_name`,`batch_dept`),
-  CONSTRAINT `batch` FOREIGN KEY (`batch_name`, `batch_dept`) REFERENCES `batches` (`batch_name`, `batch_dept`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `course` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
 # Dump of table depts
 # ------------------------------------------------------------
 
@@ -136,4 +121,18 @@ CREATE TABLE `slot_allocs` (
   CONSTRAINT `fk_course` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_room` FOREIGN KEY (`room`) REFERENCES `rooms` (`room_name`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_slot` FOREIGN KEY (`table_name`, `day`, `slot_num`) REFERENCES `slots` (`table_name`, `day`, `slot_num`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+# Dump of table allowed
+# ------------------------------------------------------------
+
+CREATE TABLE `allowed` (
+  `course_id` char(10) NOT NULL,
+  `batch_name` varchar(30) NOT NULL,
+  `batch_dept` char(5) NOT NULL,
+  PRIMARY KEY (`course_id`,`batch_name`,`batch_dept`),
+  KEY `course_id` (`course_id`),
+  KEY `batch_name` (`batch_name`,`batch_dept`),
+  CONSTRAINT `batch` FOREIGN KEY (`batch_name`, `batch_dept`) REFERENCES `batches` (`batch_name`, `batch_dept`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `course` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
