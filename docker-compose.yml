@@ -1,12 +1,26 @@
 version: '2'
 
 services:
+  mariadb:
+    image: mariadb:10
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./.mariadb:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
+      MYSQL_DATABASE: quickslots
+
   quickslots:
+    depends_on:
+      - mariadb
     image: activatedgeek/quickslots:latest
     build:
       context: ./
       dockerfile: Dockerfile
     ports:
       - "2000:80"
+    links:
+      - mariadb
     volumes:
       - "./:/app"
