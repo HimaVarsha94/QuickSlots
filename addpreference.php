@@ -335,7 +335,7 @@ HTML;
 </head>
 
 <body style="min-width: 1347px;">
-  <div id="shadowhead">Allocate Timetable</div>
+  <div id="shadowhead">Add Preferences</div>
   <div id="header">
     <div id="account_info">
       <div class="infoTab"><div class="fixer"></div><div class="dashIcon usr"></div><div id="fName"><?=$_SESSION['fName']?></div></div>
@@ -361,117 +361,6 @@ HTML;
             <li class="limenu"><a href="allocate.php">Allocate Timetable</a></li>
             <li class="limenu"><a href="./">View Timetable</a></li>
     </ul>
-  </div>
-  <div id="content" style="padding:15px 0 0 15px;overflow-x: visible">
-    <div class="tableContainer">
-      <div class="title" style="margin-top:-15px">
-        <span class="inline" style="vertical-align: middle;padding-top:10px">Timetable:</span>
-        <select id="table_name" name="table" style="width: 170px" data-placeholder="Choose a timetable...">
-          <?php
-            foreach($db->query('SELECT * FROM timetables') as $timetable)
-            {
-              $active = $timetable['active']?' (active)':'';
-              echo "<option value=\"{$timetable['table_name']}\">{$timetable['table_name']}{$active}</option>";
-            }
-          ?>
-        </select>
-      </div>
-      <div id="timetable" class="table"></div>
-      <form id="courseAlloc" action="allocate.php?action=saveSlots">
-        <?php
-        $query = $db->prepare('SELECT * FROM slot_allocs where table_name=? AND course_id IN (SELECT course_id FROM courses where fac_id=?)');
-        $query->execute([$current['table_name'],$_SESSION['faculty']]);
-        while($slot = $query->fetch())
-          echo '<input type="hidden" name="'. $slot['day'].'_'.$slot['slot_num'] .'" value="'.$slot['course_id']. ':'.$slot['room'].'" >';
-        ?>
-        <?php if(valueCheck("error","conflict")): ?>
-          <div class="blocktext info error">
-            <b>&#10006; </b>&nbsp; Another faculty has just allocated one of the slots. Please try again
-          </div>
-        <?php else: ?>
-          <div class="blocktext info">
-          </div>
-        <?php endif; ?>
-        <div class="center">
-          <button>Save</button>
-        </div>
-      </form>
-      <div id="legend" class="left" style="position:static;padding:0;margin: -30px 0 10px 0">
-        <div class="title inline" style="height: 30px">Legend:</div>
-        <div class="table" style="margin-left: 10px;width:350px">
-          <div class="cell" style="margin: 0 10px 0 0">Free</div>
-          <div style="display:table-cell;width:20px"></div>
-          <div class="cell disabled">Disabled</div>
-        </div>
-        <span style="line-height: 25px">
-          &#9679; Drag and Drop a course from the right panel to the required slot<br>
-          &#9679; Double-click on a slot to clear it<br>
-          &#9679; Conflicting Slots are indicated in red and would contain the number of batches affected<br>
-          &#9679; A '~' before a course indicates that its conflicts are not considered
-        </span>
-      </div>
-      <div id="disabledSlots">
-      <?php
-        $query = $db->prepare("SELECT * FROM slots WHERE table_name=? AND state='disabled'");
-        $query->execute([$current['table_name']]);
-        $disabled = $query->fetchall();
-        foreach ($disabled as $slot)
-          echo '<input type="hidden" name="'. $slot['day'].'_'.$slot['slot_num'] .'" value="disabled" >';
-      ?>
-      </div>
-      <div class="blocked">
-        <?php
-        foreach ($courses as $course)
-        {
-          if($course['allow_conflict'] && $current['allowConflicts'])
-            continue;
-          echo "<div class=\"{$course['course_id']}\">";
-          foreach ($blocked[$course['course_id']] as $slot => $batches)
-            echo "<input type= \"hidden\" name=\"$slot\" value=\"$batches\" >";
-          echo "</div>";
-        }
-        ?>
-      </div>
-      <div id="footer" style="position: relative">Powered by <a href="https://github.com/0verrider/QuickSlots">QuickSlots v1.0</a></div>
-    </div>
-    <div id="rightpane" style="width: 235px;margin-left:10px">
-    <?php if(!sessionCheck('level','faculty')) : ?>
-      <div class="title">Faculty</div>
-      <select id="faculty" class="stretch">
-        <?php
-          $query = $db->prepare('SELECT * FROM faculty where dept_code=?');
-          $query->execute([$_SESSION['dept']]);
-          foreach($query->fetchall() as $fac)
-            echo "<option value=\"{$fac['uName']}\">{$fac['fac_name']} ({$fac['uName']})</option>"
-        ?>
-      </select>
-    <?php endif; ?>
-      <div class="title" style="padding: 15px 0">Courses</div>
-      <div id="courseScroll">
-        <?php
-        foreach ($courses as $course)
-        {
-          $conflict = $course['allow_conflict']?'class="conflict"':'';
-          echo "<div class=\"course\" id=\"{$course['course_id']}\"> <span {$conflict}>{$course['course_name']} ({$course['course_id']})</span></div>";
-        }
-        if(!$courses)
-          echo 'You have not started offering any courses.<br>Visit the <b>Manage Courses</b> section to add courses'
-        ?>
-      </div>
-      <div class="title" style="padding: 15px 0">Assign Room</div>
-      <span id="roomSelect">Click on a slot to assign room</span>
-      <div class="title stretch" style="padding:20px 0 10px 0">Conflict Details</div>
-      <table id="conflict_info">
-        <tr>
-          <th>Course</th>
-          <th>Faculty</th>
-          <th>Batches</th>
-        </tr>
-        <tr style="font-style:">
-          <td colspan="3" id="conflict_help" >&#9679; Drop a course into a conflicting slot to show conflict details</td>
-        </tr>
-      </table>
-    </div>
   </div>
 </body>
 </html>

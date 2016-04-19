@@ -35,7 +35,7 @@ if(!empty($_GET['batch']))
   $(function()
   {
       $("#main_menu a").each(function() {
-        if($(this).prop('href') == window.location.href || window.location.href.search($(this).prop('href'))>-1)  
+        if($(this).prop('href') == window.location.href || window.location.href.search($(this).prop('href'))>-1)
         {
           $(this).parent().addClass('current');
           document.title+= " | " + this.innerHTML;
@@ -51,7 +51,7 @@ if(!empty($_GET['batch']))
       $("select").change(function(){
         window.location.href='./?'+$("#filters :input[value!='']").serialize();
       })
-      <?php 
+      <?php
         $t=$current['start_hr'] .":". $current['start_min'] ." ". $current['start_mer'];
         echo"      drawGrid('{$current['table_name']}',{$current['slots']},{$current['days']},{$current['duration']},'$t');\n";
         $deptFilter = 'where dept_code=?';
@@ -82,9 +82,9 @@ if(!empty($_GET['batch']))
           $queryParams[] = $batch[0];
           $queryParams[] = $batch[1];
         }
-        $queryString = 'SELECT course_id,course_name,day,slot_num,room,fac_name,batches from slot_allocs NATURAL JOIN 
+        $queryString = 'SELECT course_id,course_name,day,slot_num,room,fac_name,batches from slot_allocs NATURAL JOIN
           (SELECT * from courses NATURAL JOIN
-          (SELECT uName as fac_id,fac_name from faculty '. $deptFilter . $facFilter .  ') dept_fac) dept_courses  NATURAL JOIN 
+          (SELECT uName as fac_id,fac_name from faculty '. $deptFilter . $facFilter .  ') dept_fac) dept_courses  NATURAL JOIN
           (SELECT course_id, GROUP_CONCAT(CONCAT(batch_name,\' : \',batch_dept) SEPARATOR \', \') as batches from allowed GROUP by course_id) course_batches ' . $batchFilter . ' WHERE table_name=?';
         $queryParams[]=$current['table_name'];
         $query = $db->prepare($queryString);
@@ -211,6 +211,10 @@ if(!empty($_GET['batch']))
               <li class="limenu"><a href="manage.php?action=rooms">Manage Rooms</a></li>';
     ?>
               <li class="limenu"><a href="faculty.php">Manage Courses</a></li>
+              <?php
+                if(!sessionCheck('level', 'dean'))
+                 echo '<li class="limenu"><a href="addpreference.php">Add Preferences</a></li>';
+               ?>
               <li class="limenu"><a href="allocate.php">Allocate Timetable</a></li>
               <li class="limenu"><a href="./">View Timetable</a></li>
     </ul>
@@ -301,7 +305,7 @@ if(!empty($_GET['batch']))
     <div id="rightpane">
       <div class="title stretch" style="padding:40px 0 10px 0">Course Details</div>
       <table id="course_info">
-        <tr class="course_name">          
+        <tr class="course_name">
           <th>Course</th><td rowspan="4" style="color:#999">&#9679; Click on a course to show details</td>
         </tr>
         <tr class="fac_name">
@@ -312,8 +316,8 @@ if(!empty($_GET['batch']))
         </tr>
         <tr class="batches">
           <th>Batches</th>
-        </tr>    
-      </table>        
+        </tr>
+      </table>
     </div>
     <div id="disabledSlots">
       <?php
