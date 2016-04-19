@@ -362,5 +362,11 @@ HTML;
             <li class="limenu"><a href="./">View Timetable</a></li>
     </ul>
   </div>
+  <div id = "content" >
+      <form>
+          <span class="inline" style="vertical-align: middle;padding-top:10px">Number of courses:</span>
+          <input type = "number"  min="1" max="5" name="table" style="width: 170px" data-placeholder="1">
+      </form>
+  </div>
 </body>
 </html>
