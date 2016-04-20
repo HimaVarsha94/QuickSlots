@@ -367,10 +367,10 @@ HTML;
           <span class="inline" style="vertical-align: middle;padding-top:10px">Course ID</span>
           <select id = "courseId" name="course_id" style="width: 170px">
               <?php
-                $query = $db->prepare('SELECT course_id FROM courses WHERE fac_id = ?');
+                $query = $db->prepare('SELECT course_id,type FROM courses WHERE fac_id = ?');
                 $query -> execute($_SESSION['faculty']);
                 while($course_id = $query->fetch())
-                    echo "<option value=\"{$course_id['course_id']}\">{$course_id['course_id']}{$active}</option>";
+                    echo "<option value=\"{$course_id['course_id']}\"  data=\"\">{$course_id['course_id']}</option>";
               ?>
           </select>
           <input type = "radio" name = "session" value = "anytime" checked>Any Time
@@ -381,12 +381,18 @@ HTML;
 
           <select id = "course_slot" name="course_slot" style="width: 170px">
               <?php
-                $query = $db->prepare('SELECT course_id FROM courses WHERE fac_id = ?');
-                $query -> execute($_SESSION['faculty']);
-                while($course_id = $query->fetch())
-                    echo "<option value=\"{$course_id['course_id']}\">{$course_id['course_id']}{$active}</option>";
-              ?>
+                echo '<script> var all_slots = [];';
+                // foreach($db->query('SELECT id, lab, tod FROM slot_groups'as $all_slots)
+                // {
+                //         echo 'all_slots.push({id:\"'.$all_slots['id'].'\", lab:\"'.$all_slots['lab'].'\", tod:\"'.$all_slots['tod'].'\"})';
+                // }
+                echo '</script>';
+               ?>
+              <script>
+
+              </script>
           </select>
+
 
       </form>
   </div>
