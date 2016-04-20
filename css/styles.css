@@ -249,7 +249,7 @@ input[type=radio] + label
 }
 input[type=checkbox], input[type=radio]
 {
-  visibility: hidden;
+  /*visibility: hidden;*/
 }
 input[type=checkbox] + label, input[type=radio] + label
 {
@@ -267,7 +267,9 @@ input[type=checkbox]:checked + label, input[type=radio]:checked + label
 input[type=checkbox]:checked + label:active, input[type=radio]:checked + label:active
 {
   background-position:  2px -75px;
+
 }
+
 button::-moz-focus-inner
 {
   border: 0;
