@@ -364,8 +364,23 @@ HTML;
   </div>
   <div id = "content" >
       <form>
-          <span class="inline" style="vertical-align: middle;padding-top:10px">Number of courses:</span>
-          <input type = "number"  min="1" max="5" name="table" style="width: 170px" data-placeholder="1">
+          <span class="inline" style="vertical-align: middle;padding-top:10px">Course ID</span>
+          <select id = "courseId" name="course_id" style="width: 170px">
+              <?php
+                $query = $db->prepare('SELECT course_id FROM courses WHERE fac_id = ?');
+                $query -> execute($_SESSION['faculty']);
+                while($course_id = $query->fetch())
+                    echo "<option value=\"{$course_id['course_id']}\">{$course_id['course_id']}{$active}</option>";
+              ?>
+          </select>
+          <input type = "radio" name = "session" value = "anytime" checked>Any Time
+          <input type="radio" name="session" value="morning" > Morning
+          <input type="radio" name="session" value="evening"> Evening <br/>
+          <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 1</span>
+          <select id="prefered_slots" name = "prefered_slots" multiple>
+              
+          </select>
+
       </form>
   </div>
 </body>
