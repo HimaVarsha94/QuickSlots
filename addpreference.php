@@ -377,8 +377,15 @@ HTML;
           <input type="radio" name="session" value="morning" > Morning
           <input type="radio" name="session" value="evening"> Evening <br/>
           <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 1</span>
-          <select id="prefered_slots" name = "prefered_slots" multiple>
-              
+          <span class="inline" style="vertical-align: middle;padding-top:10px">Course ID</span>
+
+          <select id = "course_slot" name="course_slot" style="width: 170px">
+              <?php
+                $query = $db->prepare('SELECT course_id FROM courses WHERE fac_id = ?');
+                $query -> execute($_SESSION['faculty']);
+                while($course_id = $query->fetch())
+                    echo "<option value=\"{$course_id['course_id']}\">{$course_id['course_id']}{$active}</option>";
+              ?>
           </select>
 
       </form>
