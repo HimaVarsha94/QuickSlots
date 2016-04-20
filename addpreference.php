@@ -148,6 +148,7 @@ HTML;
   <script type="text/javascript" src="js/chosen.js"></script>
   <script type="text/javascript" src="js/grid.js"></script>
   <script>
+  var all_slots = new Array();
   $(function()
   {
     $("#main_menu a").each(function() {
@@ -331,6 +332,39 @@ HTML;
       return message;
     }
   }
+ $( document ).ready(function() {
+
+ 		var courseId = document.getElementById("courseId");
+
+ 		//Event Listener handler
+   	var setSlots = function(){
+   		// console.log("here");
+   		var courseType = courseId.options[courseId.selectedIndex].getAttribute("data");
+   		// TO-DO 
+   		// Add the respective slots according to the type of courses.
+   	}
+		// Handler for .ready() called.
+			//First try using addEventListener, the standard method to add a event listener:
+		if(courseId.addEventListener){
+			console.log("addEventListener");
+		  courseId.addEventListener("change", setSlots, false);
+		}
+		//If it doesn't exist, try attachEvent, the IE way:
+		else if(courseId.attachEvent){
+			console.log("attachEvent");
+
+		  courseId.attachEvent("onchange", setSlots);
+		}
+		//Just use onchange if neither exist
+		else{
+			console.log("None");
+		
+			courseId.onchange = setSlots;
+		}
+
+	});
+
+
   </script>
 </head>
 
@@ -366,11 +400,13 @@ HTML;
       <form>
           <span class="inline" style="vertical-align: middle;padding-top:10px">Course ID</span>
           <select id = "courseId" name="course_id" style="width: 170px">
+          	<option value="select_course" data="1">Select Course</option>
+          	<option value="select_some" data="2">Select Some</option>>
               <?php
                 $query = $db->prepare('SELECT course_id,type FROM courses WHERE fac_id = ?');
                 $query -> execute($_SESSION['faculty']);
                 while($course_id = $query->fetch())
-                    echo "<option value=\"{$course_id['course_id']}\"  data=\"\">{$course_id['course_id']}</option>";
+                    echo "<option value=\"{$course_id['course_id']}\"  data=\"{$course_id['type']}\">{$course_id['course_id']}</option>";
               ?>
           </select>
           <input type = "radio" name = "session" value = "anytime" checked>Any Time
@@ -380,8 +416,9 @@ HTML;
           <span class="inline" style="vertical-align: middle;padding-top:10px">Course ID</span>
 
           <select id = "course_slot" name="course_slot" style="width: 170px">
+          	<option value="select_slot">Select Slot</option>
               <?php
-                echo '<script> var all_slots = [];';
+                echo '<script>';
                 // foreach($db->query('SELECT id, lab, tod FROM slot_groups'as $all_slots)
                 // {
                 //         echo 'all_slots.push({id:\"'.$all_slots['id'].'\", lab:\"'.$all_slots['lab'].'\", tod:\"'.$all_slots['tod'].'\"})';
