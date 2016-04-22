@@ -148,7 +148,7 @@ HTML;
   <script type="text/javascript" src="js/chosen.js"></script>
   <script type="text/javascript" src="js/grid.js"></script>
   <script>
-  var all_slots = new Array();
+
   $(function()
   {
     $("#main_menu a").each(function() {
@@ -333,37 +333,78 @@ HTML;
     }
   }
  $( document ).ready(function() {
-
- 		var courseId = document.getElementById("courseId");
-
+ 	var courseId = document.getElementById("courseId");
+    // var dayTime = document.getElementBy
  		//Event Listener handler
-   	var setSlots = function(){
+   	var setSlots = function(parentId){
    		// console.log("here");
+        var courseId = document.getElementById("courseId");
    		var courseType = courseId.options[courseId.selectedIndex].getAttribute("data");
-   		// TO-DO 
-   		// Add the respective slots according to the type of courses.
+        if(courseType=="nothing"){
+            document.getElementById("course_slot").innerHTML = '<option value="select_slot">Select Slot</option>';
+            return 0;
+        }
+        var sessions = document.getElementsByName('session');
+        var session_value;
+        for(var i = 0; i < sessions.length; i++){
+            if(sessions[i].checked){
+                session_value = sessions[i].value;
+            }
+        }
+        var slots;
+        if(parentId=="everyone"){
+            slots = document.getElementById("course_slot");
+        }
+        else{
+            slots = $("#"+parentId).find("#course_slot");
+        }
+        slots.innerHTML = '<option value="select_slot">Select Slot</option>';
+        for(var i = 0; i < allSlots.length; i++) {
+            var singleSlot = allSlots[i];
+            if( courseType == 'lab' && allSlots[i].lab == 1) { //checking if it is a lab course or not
+                if(session_value == 'morning' && allSlots[i].tod == 'morning') {
+                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                } else if(session_value == 'evening' && allSlots[i].tod == 'evening') {
+                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                } else if(session_value == 'anytime'){
+                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                }
+            } else if( allSlots[i].lab == 0) { //checking
+                if(session_value == 'morning' && allSlots[i].tod == 'morning') {
+                    console.log("here");
+                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                } else if(session_value == 'evening' && allSlots[i].tod == 'evening') {
+                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                } else if(session_value == 'anytime'){
+                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                }
+            }
+        }
    	}
-		// Handler for .ready() called.
-			//First try using addEventListener, the standard method to add a event listener:
-		if(courseId.addEventListener){
-			console.log("addEventListener");
-		  courseId.addEventListener("change", setSlots, false);
-		}
-		//If it doesn't exist, try attachEvent, the IE way:
-		else if(courseId.attachEvent){
-			console.log("attachEvent");
+ 	// Handler for .ready() called.
+ 		//First try using addEventListener, the standard method to add a event listener:
+ 	if(courseId.addEventListener){
+ 		console.log("addEventListener");
+ 	  courseId.addEventListener("change", function(){setSlots("everyone");}, false);
+ 	}
+ 	//If it doesn't exist, try attachEvent, the IE way:
+ 	else if(courseId.attachEvent){
+ 		console.log("attachEvent");
+ 	  courseId.attachEvent("onchange", function(){setSlots("everyone");});
+ 	}
+ 	//Just use onchange if neither exist
+ 	else{
+ 		console.log("None");
+ 		courseId.onchange = function(){setSlots("everyone");};
+ 	}
+    $('input[type=radio]').click(function(){
+        var parentId = this.parentNode.id;
+        console.log(parentId);
+        setSlots(parentId);
+    });
 
-		  courseId.attachEvent("onchange", setSlots);
-		}
-		//Just use onchange if neither exist
-		else{
-			console.log("None");
-		
-			courseId.onchange = setSlots;
-		}
 
-	});
-
+ });
 
   </script>
 </head>
@@ -397,39 +438,40 @@ HTML;
     </ul>
   </div>
   <div id = "content" >
-      <form>
+      <form name = "preferencesForm">
           <span class="inline" style="vertical-align: middle;padding-top:10px">Course ID</span>
           <select id = "courseId" name="course_id" style="width: 170px">
-          	<option value="select_course" data="1">Select Course</option>
-          	<option value="select_some" data="2">Select Some</option>>
+          	<option value="select_course" data="nothing">Select Course</option>
               <?php
                 $query = $db->prepare('SELECT course_id,type FROM courses WHERE fac_id = ?');
-                $query -> execute($_SESSION['faculty']);
-                while($course_id = $query->fetch())
-                    echo "<option value=\"{$course_id['course_id']}\"  data=\"{$course_id['type']}\">{$course_id['course_id']}</option>";
+                $query -> execute([$_SESSION['faculty']]);
+                while($course_id = $query->fetch()) {
+                    echo '<option value="'.$course_id['course_id'].'" data="'.$course_id['type'].'">'.$course_id['course_id'].'</option>';
+                }
               ?>
-          </select>
-          <input type = "radio" name = "session" value = "anytime" checked>Any Time
-          <input type="radio" name="session" value="morning" > Morning
-          <input type="radio" name="session" value="evening"> Evening <br/>
-          <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 1</span>
-          <span class="inline" style="vertical-align: middle;padding-top:10px">Course ID</span>
+          </select> <br/>
+          <div class = " preferencesClass" id = "preference1">
+              <span class="inline" style="vertical-align: middle;padding-top:10px">Time of the Day</span>
+              <input type = "radio" name = "session" value = "anytime" checked>Any Time
+              <input type="radio" name="session" value="morning" > Morning
+              <input type="radio" name="session" value="evening"> Evening <br/>
+              <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 1</span>
 
+              <select id = "course_slot" name="course_slot" style="width: 170px">
+              	<option value="select_slot">Select Slot</option>
+                  <?php
+                    echo '<script>  var allSlots = new Array();';
+                    foreach($db->query('SELECT id, lab, tod FROM slot_groups')as $all_slots)
+                    {
+                            echo 'allSlots.push({id:"'.$all_slots['id'].'", lab:"'.$all_slots['lab'].'", tod:"'.$all_slots['tod'].'"});';
+                    }
+                    echo '</script>';
+                   ?>
+              </select> <br/>
+      </div>
+          <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 2</span>
           <select id = "course_slot" name="course_slot" style="width: 170px">
-          	<option value="select_slot">Select Slot</option>
-              <?php
-                echo '<script>';
-                // foreach($db->query('SELECT id, lab, tod FROM slot_groups'as $all_slots)
-                // {
-                //         echo 'all_slots.push({id:\"'.$all_slots['id'].'\", lab:\"'.$all_slots['lab'].'\", tod:\"'.$all_slots['tod'].'\"})';
-                // }
-                echo '</script>';
-               ?>
-              <script>
-
-              </script>
           </select>
-
 
       </form>
   </div>
