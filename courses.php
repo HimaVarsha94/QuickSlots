@@ -42,6 +42,12 @@ if(valueCheck('action','add'))
       postResponse("error",$e->errorInfo[2]);
   }
 }
+elseif(valueCheck('action','update'))
+{
+  $query = $db->prepare('UPDATE courses SET course_name=?,registered_count=? WHERE course_id =? AND fac_id =?');
+  $query->execute([$_POST['cName'],$_POST['cRCount'],$_POST['cId'],$_SESSION['faculty']]);
+  postResponse("updateOpt","Course updated");
+}
 elseif(valueCheck('action','delete'))
 {
   $query = $db->prepare('DELETE FROM courses where course_id =? and fac_id =?');

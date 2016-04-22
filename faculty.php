@@ -54,7 +54,17 @@ if(!sessionCheck('level','faculty'))
       $("select").chosen();
       $("#faculty").change(function(){
         window.location.href='faculty.php?faculty='+this.value;
-      })
+      });
+      $("#courseSelect").change(function(){
+        var value = $(this).val();
+        var node = $(this).children('option[value="' + value + '"]')[0];
+
+        var courseName = $(node).attr('data-coursename');
+        var rCount = $(node).attr('data-rcount');
+
+        $(this).siblings('input[name="cName"]').val(courseName);
+        $(this).siblings('input[name="cRCount"]').val(rCount);
+      });
   })
   </script>
 </head>
@@ -102,54 +112,85 @@ if(!sessionCheck('level','faculty'))
         </select>
       </div>
     <?php endif; ?>
-      <div class="box">
-          <div class="boxbg"></div>
-          <div class="information"><div class="add icon"></div></div>
-          <div class="title">Add  Course</div>
-          <div class="elements">
-            <form method="post" action="courses.php?action=add">
-              <input type="text" name="cId" class="styled details" required pattern="[^ :]{2,20}" title="2 to 20 characters without spaces" placeholder="Course ID" />
-              <input type="text" name="cName" class="styled details" required pattern=".{6,100}" title="6 to 100 characters" placeholder="Course Name" />
-              <input type="text" name="cRCount" class="styled details" required pattern="[0-9]+" title="6 to 100 characters" placeholder="Count of students" />
-              <select name="batch[]" id="allowed" multiple="" class="stretch"  data-placeholder="Allowed Batches..." required>
-                <?php
-                foreach($db->query('SELECT * FROM batches') as $batch)
-                  echo "<option value=\"{$batch['batch_name']} : {$batch['batch_dept']}\">{$batch['batch_name']} : {$batch['batch_dept']} ({$batch['size']})</option>";
-                ?>
-              </select>
-              <div class="left">
-                <input type="checkbox" class="styled" id="allowConflict" value="1" name="allowConflict">
-                <label for="allowConflict">Allow conflicting allocations</label>
-              </div>
-              <div class="blocktext info"></div>
-              <div class="center button">
-                  <button>Add</button>
-              </div>
-            </form>
-          </div>
-      </div>
-      <div class="box">
-          <div class="boxbg"></div>
-          <div class="information"><div class="icon remove"></div></div>
-          <div class="title">Delete Course</div>
-          <div class="elements">
-            <form method="post" action="courses.php?action=delete" class="confirm">
-              <select name="cId" class="updateSelect stretch" data-placeholder="Choose Course..." required>
-                <option label="Choose Course..."></option>
-                <?php
-                $query = $db->prepare('SELECT * FROM courses where fac_id = ?');
-                $query->execute([$_SESSION['faculty']]);
-                while($course = $query->fetch())
-                  echo "<option value=\"{$course['course_id']}\">{$course['course_name']} ({$course['course_id']})</option>"
-                ?>
-              </select>
-              <input type="hidden" id="confirm_msg" value="Are you sure you want to delete the selected course?">
-              <div class="blocktext info"></div>
-              <div class="center button">
-                <button>Delete</button>
-              </div>
-            </form>
-          </div>
+      <div class="inline">
+        <div class="box">
+            <div class="boxbg"></div>
+            <div class="information"><div class="add icon"></div></div>
+            <div class="title">Add  Course</div>
+            <div class="elements">
+              <form method="post" action="courses.php?action=add">
+                <input type="text" name="cId" class="styled details" required pattern="[^ :]{2,20}" title="2 to 20 characters without spaces" placeholder="Course ID" />
+                <input type="text" name="cName" class="styled details" required pattern=".{6,100}" title="6 to 100 characters" placeholder="Course Name" />
+                <input type="text" name="cRCount" class="styled details" required pattern="[0-9]+" title="6 to 100 characters" placeholder="Count of students" />
+                <select name="batch[]" id="allowed" multiple="" class="stretch"  data-placeholder="Allowed Batches..." required>
+                  <?php
+                  foreach($db->query('SELECT * FROM batches') as $batch)
+                    echo "<option value=\"{$batch['batch_name']} : {$batch['batch_dept']}\">{$batch['batch_name']} : {$batch['batch_dept']} ({$batch['size']})</option>";
+                  ?>
+                </select>
+                <div class="left">
+                  <input type="checkbox" class="styled" id="allowConflict" value="1" name="allowConflict">
+                  <label for="allowConflict">Allow conflicting allocations</label>
+                </div>
+                <div class="blocktext info"></div>
+                <div class="center button">
+                    <button>Add</button>
+                </div>
+              </form>
+            </div>
+        </div>
+        <div class="box">
+            <div class="boxbg"></div>
+            <div class="information"><div class="icon remove"></div></div>
+            <div class="title">Update Course</div>
+            <div class="elements">
+              <form method="post" action="courses.php?action=update">
+                <select name="cId" id="courseSelect" class="updateSelect stretch" data-placeholder="Choose Course..." required>
+                  <option label="Choose Course..."></option>
+                  <?php
+                  $query = $db->prepare('SELECT * FROM courses WHERE fac_id = ?');
+                  $query->execute([$_SESSION['faculty']]);
+
+                  while($course = $query->fetch())
+                    echo "<option value=\"{$course['course_id']}\" data-coursename=\"{$course['course_name']}\" data-rcount=\"{$course['registered_count']}\">{$course['course_name']} ({$course['course_id']})</option>"
+                  ?>
+                </select>
+                <input type="text" name="cName" class="styled details" required pattern=".{6,100}" title="6 to 100 characters" placeholder="Course Name" />
+                <input type="text" name="cRCount" class="styled details" required pattern="[0-9]+" title="6 to 100 characters" placeholder="Count of students" />
+                <div class="left">
+                  <input type="checkbox" class="styled" id="updateAllowConflict" value="1" name="updateAllowConflict">
+                  <label for="updateAllowConflict">Allow conflicting allocations</label>
+                </div>
+                <div class="blocktext info"></div>
+                <div class="center button">
+                  <button>Update</button>
+                </div>
+              </form>
+            </div>
+        </div>
+        <div class="box">
+            <div class="boxbg"></div>
+            <div class="information"><div class="icon remove"></div></div>
+            <div class="title">Delete Course</div>
+            <div class="elements">
+              <form method="post" action="courses.php?action=delete" class="confirm">
+                <select name="cId" class="updateSelect stretch" data-placeholder="Choose Course..." required>
+                  <option label="Choose Course..."></option>
+                  <?php
+                  $query = $db->prepare('SELECT * FROM courses where fac_id = ?');
+                  $query->execute([$_SESSION['faculty']]);
+                  while($course = $query->fetch())
+                    echo "<option value=\"{$course['course_id']}\">{$course['course_name']} ({$course['course_id']})</option>"
+                  ?>
+                </select>
+                <input type="hidden" id="confirm_msg" value="Are you sure you want to delete the selected course?">
+                <div class="blocktext info"></div>
+                <div class="center button">
+                  <button>Delete</button>
+                </div>
+              </form>
+            </div>
+        </div>
       </div>
     </div>
   </div>
