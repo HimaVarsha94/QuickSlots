@@ -29,7 +29,7 @@ require_once ('connect_db.php');
   $(function()
   {
       $("#main_menu a").each(function() {
-          if($(this).prop('href') == window.location.href || window.location.href.search($(this).prop('href'))>-1)  
+          if($(this).prop('href') == window.location.href || window.location.href.search($(this).prop('href'))>-1)
           {
               $(this).parent().addClass('current');
               document.title+= " | " + this.innerHTML;
@@ -246,9 +246,39 @@ require_once ('connect_db.php');
         <form method="post" action="rooms.php?action=add">
           <input type="text" name="room_name" class="styled details" required pattern="[^:]{2,25}" title="2 to 25 alphanumeric characters" placeholder="Room Name" />
           <input type="text" name="capacity" class="styled details" required pattern="[0-9]{1,3}" title="Number less than 1000" placeholder="Capacity" />
+          <div class="center">
+            <input type="checkbox" class="styled" id="isLab" value="1" name="isLab">
+            <label for="isLab">Lab</label>
+          </div>
           <div class="blocktext info"></div>
           <div class="center button">
             <button>Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="box">
+      <div class="boxbg"></div>
+      <div class="information"><div class="icon remove"></div></div>
+      <div class="title">Update Room</div>
+      <div class="elements">
+        <form method="post" action="rooms.php?action=update">
+          <select name="room_name" class="updateSelect stretch"  data-placeholder="Choose Room..." required>
+            <option label="Choose Room..."></option>
+            <?php
+            foreach($db->query('SELECT * FROM rooms') as $room)
+              echo "<option value=\"{$room['room_name']}\">{$room['room_name']} ({$room['capacity']})</option>";
+            ?>
+          </select>
+          <input type="text" name="capacity" class="styled details" required pattern="[0-9]{1,3}" title="Number less than 1000" placeholder="Enter New Capacity" />
+          <div class="center">
+            <input type="checkbox" class="styled" id="updateLab" value="1" name="updateLab">
+            <label for="updateLab">Lab</label>
+          </div>
+          <!-- <input type="text" name="capacity" class="styled details" required pattern="[0-9]{1,3}" title="Number less than 1000" placeholder="Enter New Capacity" /> -->
+          <div class="blocktext info"></div>
+          <div class="center button">
+            <button>Update</button>
           </div>
         </form>
       </div>
