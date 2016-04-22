@@ -61,9 +61,11 @@ if(!sessionCheck('level','faculty'))
 
         var courseName = $(node).attr('data-coursename');
         var rCount = $(node).attr('data-rcount');
+        var cType = $(node).attr('data-type');
 
         $(this).siblings('input[name="cName"]').val(courseName);
         $(this).siblings('input[name="cRCount"]').val(rCount);
+        $(this).siblings('input[name="cType"]').val(cType);
       });
   })
   </script>
@@ -126,6 +128,14 @@ if(!sessionCheck('level','faculty'))
                 echo "<option value=\"{$batch['batch_name']} : {$batch['batch_dept']}\">{$batch['batch_name']} : {$batch['batch_dept']} ({$batch['size']})</option>";
               ?>
             </select>
+            <select name="cType" class="stretch"  data-placeholder="Course Type..." required>
+              <option label="Choose Course Type..."></option>
+              <option value="core">Core</option>
+              <option value="minor">Minor</option>
+              <option value="lab">Lab</option>
+              <option value="laca">LA/CA</option>
+              <option value="other">Other</option>
+            </select>
             <div class="left">
               <input type="checkbox" class="styled" id="allowConflict" value="1" name="allowConflict">
               <label for="allowConflict">Allow conflicting allocations</label>
@@ -150,11 +160,19 @@ if(!sessionCheck('level','faculty'))
               $query->execute([$_SESSION['faculty']]);
 
               while($course = $query->fetch())
-                echo "<option value=\"{$course['course_id']}\" data-coursename=\"{$course['course_name']}\" data-rcount=\"{$course['registered_count']}\">{$course['course_name']} ({$course['course_id']})</option>"
+                echo "<option value=\"{$course['course_id']}\" data-coursename=\"{$course['course_name']}\" data-rcount=\"{$course['registered_count']}\" data-type=\"{$course['type']}\">{$course['course_name']} ({$course['course_id']})</option>"
               ?>
             </select>
             <input type="text" name="cName" class="styled details" required pattern=".{6,100}" title="6 to 100 characters" placeholder="Course Name" />
             <input type="text" name="cRCount" class="styled details" required pattern="[0-9]+" title="6 to 100 characters" placeholder="Count of students" />
+            <select name="cType" class="stretch"  data-placeholder="Course Type..." required>
+              <option label="Choose Course Type..."></option>
+              <option value="core">Core</option>
+              <option value="minor">Minor</option>
+              <option value="lab">Lab</option>
+              <option value="laca">LA/CA</option>
+              <option value="other">Other</option>
+            </select>
             <div class="left">
               <input type="checkbox" class="styled" id="updateAllowConflict" value="1" name="updateAllowConflict">
               <label for="updateAllowConflict">Allow conflicting allocations</label>

@@ -24,8 +24,8 @@ if(valueCheck('action','add'))
     $_POST["allowConflict"] = 0;
   try
   {
-    $query = $db->prepare('INSERT INTO courses(course_Id,course_name,fac_id,allow_conflict,registered_count) values (?,?,?,?,?)');
-    $query->execute([$cId,$_POST['cName'],$_SESSION['faculty'],$_POST["allowConflict"],$_POST["cRCount"]]);
+    $query = $db->prepare('INSERT INTO courses(course_Id,course_name,fac_id,allow_conflict,registered_count,type) values (?,?,?,?,?,?)');
+    $query->execute([$cId,$_POST['cName'],$_SESSION['faculty'],$_POST["allowConflict"],$_POST["cRCount"],$_POST["cType"]]);
     $query = $db->prepare('INSERT INTO allowed(course_Id,batch_name,batch_dept) values (?,?,?)');
     foreach ($_POST['batch'] as $batch)
     {
@@ -44,8 +44,8 @@ if(valueCheck('action','add'))
 }
 elseif(valueCheck('action','update'))
 {
-  $query = $db->prepare('UPDATE courses SET course_name=?,registered_count=? WHERE course_id =? AND fac_id =?');
-  $query->execute([$_POST['cName'],$_POST['cRCount'],$_POST['cId'],$_SESSION['faculty']]);
+  $query = $db->prepare('UPDATE courses SET course_name=?,registered_count=?,type=? WHERE course_id =? AND fac_id =?');
+  $query->execute([$_POST['cName'],$_POST['cRCount'],$_POST['cType'],$_POST['cId'],$_SESSION['faculty']]);
   postResponse("updateOpt","Course updated");
 }
 elseif(valueCheck('action','delete'))
