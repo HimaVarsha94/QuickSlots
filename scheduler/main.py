@@ -44,7 +44,7 @@ def schedule():
             'edge_weights': []}
 
     # extract all the preferences
-    query = "SELECT * from preferences"
+    query = "SELECT * from preferences1"
     result = None
     with conn.cursor() as cursor:
         cursor.execute(query)
@@ -63,10 +63,6 @@ def schedule():
     # for the preferences for courses
     for allow in result:
         course_dict[allow['course_id']]['allowed'].append(allow['batch_name'])
-
-    # print json.dumps(course_dict, indent=2)
-
-
 
     # extract all the room groups
     query = "SELECT * from rooms"
@@ -124,7 +120,7 @@ def schedule():
                 weights.append(sys.maxint)
                 continue
 
-            # give weight to preferences
+            # weights for course preferences
             pweight = 0
             try:
                 j = course_dict[course]['preferences'].index(slot_group_id)
@@ -134,16 +130,18 @@ def schedule():
 
             # defining weights
             k = len(course_dict[course]['allowed'])
-            aweight = 1-float(k)/B
+            # weights for allowed batches
+            aweight = 1-float(k)/(B+1)
+            # weights for type of course
             tweight = float(1)/N
             if course_dict[course]['allowConflict'] == 0:
                 tweight /= 5
             elif course_dict[course]['type'] == 'lab':
                 tweight /= 25
-            rweight = float(abs(course_dict[course]['rCount']-rooms_dict[room_id]['capacity']))/rooms_dict[room_id]['capacity']
+            # weight for room deficit
+            rweight = float(1+abs(course_dict[course]['rCount']-rooms_dict[room_id]['capacity']))/rooms_dict[room_id]['capacity']
             # assign the weight for the edge
             weights.append(aweight*pweight*tweight*rweight)
-
         course_dict[course]['edge_weights'] = weights
 
 
@@ -160,7 +158,7 @@ def schedule():
         value = graph[row][column]
         total += value
         # print '(%d, %d) -> %f' % (row, column, value)
-        print course_dict.keys()[row], right_nodes[column]
+        print course_dict.keys()[row], right_nodes[column], value
     # print 'total profit=%d' % total
 
 if __name__ == "__main__":
