@@ -110,7 +110,7 @@ require_once ('connect_db.php');
       <div class="avatar"><div class="icon key"></div></div>
       <div class="title">Change Faculty Access</div>
       <div class="elements">
-        <form method="post" action="register.php?action=changeLevel">
+        <form method="post" action="register.php?action=changeLevel" >
           <select name="uName" id="fac_level" class="updateSelect stretch" data-placeholder="Choose Faculty..." required>
             <option label="Choose Faculty..."></option>
             <?php
@@ -164,7 +164,7 @@ require_once ('connect_db.php');
       <div class="avatar"><div class="icon add"></div></div>
       <div class="title">Add Slot Group</div>
       <div class="elements">
-        <form method="post" action="slot_groups.php?action=add">
+        <form method="post" action="slot_groups.php?action=add" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
           <input type="text" name="add_slot_id" class="styled uInfo" placeholder="Slot Group ID" required/>
           <div>
             <div>
@@ -275,7 +275,7 @@ require_once ('connect_db.php');
       <div class="avatar"><div class="icon key"></div></div>
       <div class="title">Edit Slot Group</div>
       <div class="elements">
-        <form method="post" action="slot_groups.php?action=edit">
+        <form method="post" action="slot_groups.php?action=edit" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
           <select name="edit_slot_id" class="updateSelect stretch" data-placeholder="Choose Slot Group..." required>
             <option label="Choose Slot Group..."></option>
             <?php
@@ -392,7 +392,7 @@ require_once ('connect_db.php');
       <div class="avatar"><div class="icon remove"></div></div>
       <div class="title">Delete Slot Group</div>
       <div class="elements">
-        <form method="post" action="slot_groups.php?action=delete" class="confirm">
+        <form method="post" action="slot_groups.php?action=delete" class="confirm" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
           <select name="del_slot_id" class="updateSelect stretch" data-placeholder="Choose Slot Group..." required>
             <option label="Choose Slot Group..."></option>
             <?php
