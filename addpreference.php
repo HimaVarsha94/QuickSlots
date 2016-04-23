@@ -333,70 +333,90 @@ HTML;
     }
   }
  $( document ).ready(function() {
- 	var courseId = document.getElementById("courseId");
     // var dayTime = document.getElementBy
  		//Event Listener handler
    	var setSlots = function(parentId){
    		// console.log("here");
-        var courseId = document.getElementById("courseId");
-   		var courseType = courseId.options[courseId.selectedIndex].getAttribute("data");
+        var optionNode = $("#courseId").children('option[value="' + $("#courseId").val() + '"]')[0];
+        courseType = $(optionNode).attr('data');
+        // console.log(courseType);
+
+        var slots;
+        if(parentId=="everyone"){
+            slots = $("[id^='course_slot'");
+        }
+        else{
+            if(parentId == 'preference1')
+                slots = $("#"+parentId).find("#course_slot1");
+            else if(parentId == 'preference2')
+                slots = $("#"+parentId).find("#course_slot2");
+            else
+                slots = $("#"+parentId).find("#course_slot3");
+        }
+
         if(courseType=="nothing"){
-            document.getElementById("course_slot").innerHTML = '<option value="select_slot">Select Slot</option>';
+            console.log("nothing")
+
+            slots.html('<option value="select_slot">Select Slot</option>');
             return 0;
         }
-        var sessions = document.getElementsByName('session');
+        console.log(parentId);
+        if(parentId=="everyone")
+            var sessions = $("input[type='radio']");
+        else
+            var sessions = $('#' + parentId).find("input[type='radio']");
+
         var session_value;
         for(var i = 0; i < sessions.length; i++){
             if(sessions[i].checked){
                 session_value = sessions[i].value;
             }
         }
-        var slots;
-        if(parentId=="everyone"){
-            slots = document.getElementById("course_slot");
-        }
-        else{
-            slots = $("#"+parentId).find("#course_slot");
-        }
-        slots.innerHTML = '<option value="select_slot">Select Slot</option>';
+        console.log(session_value);
+
+
+        console.log(slots);
+        slots.html('<option value="select_slot">Select Slot</option>');
+        // slots.innerHTML = '<option value="select_slot">Select Slot</option>';
         for(var i = 0; i < allSlots.length; i++) {
             var singleSlot = allSlots[i];
             if( courseType == 'lab' && allSlots[i].lab == 1) { //checking if it is a lab course or not
                 if(session_value == 'morning' && allSlots[i].tod == 'morning') {
-                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                    slots.append( '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>');
                 } else if(session_value == 'evening' && allSlots[i].tod == 'evening') {
-                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                    slots.append( '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>');
                 } else if(session_value == 'anytime'){
-                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                    slots.append( '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>');
                 }
             } else if( allSlots[i].lab == 0) { //checking
                 if(session_value == 'morning' && allSlots[i].tod == 'morning') {
                     console.log("here");
-                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                    slots.append( '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>');
                 } else if(session_value == 'evening' && allSlots[i].tod == 'evening') {
-                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                    slots.append( '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>');
                 } else if(session_value == 'anytime'){
-                    slots.innerHTML += '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>';
+                    slots.append( '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>');
                 }
             }
         }
    	}
- 	// Handler for .ready() called.
- 		//First try using addEventListener, the standard method to add a event listener:
- 	if(courseId.addEventListener){
- 		console.log("addEventListener");
- 	  courseId.addEventListener("change", function(){setSlots("everyone");}, false);
- 	}
- 	//If it doesn't exist, try attachEvent, the IE way:
- 	else if(courseId.attachEvent){
- 		console.log("attachEvent");
- 	  courseId.attachEvent("onchange", function(){setSlots("everyone");});
- 	}
- 	//Just use onchange if neither exist
- 	else{
- 		console.log("None");
- 		courseId.onchange = function(){setSlots("everyone");};
- 	}
+    $("#courseId").change(function(){setSlots("everyone");});
+ // 	// Handler for .ready() called.
+ // 		//First try using addEventListener, the standard method to add a event listener:
+ // 	if(courseId.addEventListener){
+ // 		console.log("addEventListener");
+ // 	  courseId.addEventListener("change", function(){setSlots("everyone");}, false);
+ // 	}
+ // 	//If it doesn't exist, try attachEvent, the IE way:
+ // 	else if(courseId.attachEvent){
+ // 		console.log("attachEvent");
+ // 	  courseId.attachEvent("onchange", function(){setSlots("everyone");});
+ // 	}
+ // 	//Just use onchange if neither exist
+ // 	else{
+ // 		console.log("None");
+ // 		courseId.onchange = function(){setSlots("everyone");};
+ // 	}
     $('input[type=radio]').click(function(){
         var parentId = this.parentNode.id;
         console.log(parentId);
@@ -438,7 +458,7 @@ HTML;
     </ul>
   </div>
   <div id = "content" >
-      <form name = "preferencesForm">
+      <form name = "preferencesForm" action = "preferences.php" method = "post" class="confirm">
           <span class="inline" style="vertical-align: middle;padding-top:10px">Course ID</span>
           <select id = "courseId" name="course_id" style="width: 170px">
           	<option value="select_course" data="nothing">Select Course</option>
@@ -450,29 +470,51 @@ HTML;
                 }
               ?>
           </select> <br/>
+          <?php
+            echo '<script>  var allSlots = new Array();';
+            foreach($db->query('SELECT id, lab, tod FROM slot_groups')as $all_slots)
+            {
+                    echo 'allSlots.push({id:"'.$all_slots['id'].'", lab:"'.$all_slots['lab'].'", tod:"'.$all_slots['tod'].'"});';
+            }
+            echo '</script>';
+           ?>
           <div class = " preferencesClass" id = "preference1">
               <span class="inline" style="vertical-align: middle;padding-top:10px">Time of the Day</span>
-              <input type = "radio" name = "session" value = "anytime" checked>Any Time
-              <input type="radio" name="session" value="morning" > Morning
-              <input type="radio" name="session" value="evening"> Evening <br/>
+              <input type = "radio" name = "session1" value = "anytime" checked>Any Time
+              <input type="radio" name="session1" value="morning" > Morning
+              <input type="radio" name="session1" value="evening"> Evening <br/>
               <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 1</span>
 
-              <select id = "course_slot" name="course_slot" style="width: 170px">
+              <select id = "course_slot1" name="course_slot1" style="width: 170px">
               	<option value="select_slot">Select Slot</option>
-                  <?php
-                    echo '<script>  var allSlots = new Array();';
-                    foreach($db->query('SELECT id, lab, tod FROM slot_groups')as $all_slots)
-                    {
-                            echo 'allSlots.push({id:"'.$all_slots['id'].'", lab:"'.$all_slots['lab'].'", tod:"'.$all_slots['tod'].'"});';
-                    }
-                    echo '</script>';
-                   ?>
-              </select> <br/>
-      </div>
-          <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 2</span>
-          <select id = "course_slot" name="course_slot" style="width: 170px">
-          </select>
 
+              </select> <br/>
+          </div>
+          <div class = " preferencesClass" id = "preference2">
+              <span class="inline" style="vertical-align: middle;padding-top:10px">Time of the Day</span>
+              <input type = "radio" name = "session2" value = "anytime" checked>Any Time
+              <input type="radio" name="session2" value="morning" > Morning
+              <input type="radio" name="session2" value="evening"> Evening <br/>
+              <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 2</span>
+
+              <select id = "course_slot2" name="course_slot2" style="width: 170px">
+                <option value="select_slot">Select Slot</option>
+
+              </select> <br/>
+          </div>
+          <div class = " preferencesClass" id = "preference3">
+              <span class="inline" style="vertical-align: middle;padding-top:10px">Time of the Day</span>
+              <input type = "radio" name = "session3" value = "anytime" checked>Any Time
+              <input type="radio" name="session3" value="morning" > Morning
+              <input type="radio" name="session3" value="evening"> Evening <br/>
+              <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 3</span>
+              <select id = "course_slot3" name="course_slot3" style="width: 170px">
+                <option value="select_slot">Select Slot</option>
+
+              </select> <br/>
+        </div>
+        <p class="info"></p>
+        <button type="submit" value="Submit">Submit</button>
       </form>
   </div>
 </body>
