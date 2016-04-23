@@ -164,7 +164,7 @@ require_once ('connect_db.php');
       <div class="avatar"><div class="icon add"></div></div>
       <div class="title">Add Slot Group</div>
       <div class="elements">
-        <form method="post" action="register.php">
+        <form method="post" action="slot_groups.php?action=add">
           <input type="text" name="slot_id" class="styled uInfo" placeholder="Slot Group ID" />
           <div>
             <div>
@@ -274,7 +274,7 @@ require_once ('connect_db.php');
       <div class="avatar"><div class="icon key"></div></div>
       <div class="title">Edit Slot Group</div>
       <div class="elements">
-        <form method="post" action="register.php?action=changeLevel">
+        <form method="post" action="slot_groups.php?action=edit">
           <select name="slot_id" class="updateSelect stretch" data-placeholder="Choose Slot Group..." required>
             <option label="Choose Slot Group..."></option>
             <?php
