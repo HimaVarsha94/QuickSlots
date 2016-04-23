@@ -11,15 +11,24 @@ if(!sessionCheck('level','dean'))
   die();
 if(valueCheck('action','add'))
 {
+  $var = "[[" . $_POST['slot_1_day'] . "," . $_POST['slot_1_range'] . "]";  
+  if($_POST['slot_2_day']!='') {
+    $var = $var . ",[" . $_POST['slot_2_day'] . "," . $_POST['slot_2_range'] . "]";
+  }
+  if($_POST['slot_3_day']!='') {
+    $var = $var . ",[" . $_POST['slot_3_day'] . "," . $_POST['slot_3_range'] . "]";
+  }
+  $var = $var . "]";
+
   try{
-    $query = $db->prepare('INSERT INTO rooms(room_name,capacity) values (?,?)');
-    $query->execute([$_POST['room_name'],$_POST['capacity']]);
-    postResponse("addOpt","Room Added",[$_POST['room_name'],$_POST['capacity']]);    
+    $query = $db->prepare('INSERT INTO slot_groups(id,slots,lab,tod) values (?,?,?,?)');
+    $query->execute([$_POST['slot_id'],$var, $_POST['lab'], $_POST['tod']]);
+    postResponse("addOpt","Slot Group Added.",[$_POST['id'],$var, $_POST['lab'], $_POST['tod']]);    
   }
   catch(PDOException $e)
   {
     if($e->errorInfo[0]==23000)
-      postResponse("error","Room already exists");
+      postResponse("error","Slot Group already exists.");
     else
       postResponse("error",$e->errorInfo[2]);
   }

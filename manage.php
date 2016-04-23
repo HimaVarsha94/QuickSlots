@@ -165,7 +165,7 @@ require_once ('connect_db.php');
       <div class="title">Add Slot Group</div>
       <div class="elements">
         <form method="post" action="slot_groups.php?action=add">
-          <input type="text" name="slot_id" class="styled uInfo" placeholder="Slot Group ID" />
+          <input type="text" name="slot_id" class="styled uInfo" placeholder="Slot Group ID" required/>
           <div>
             <div>
               <select name="slot_1_day" class="updateSelect stretch" data-placeholder="Choose Slot 1 Day..." required>
@@ -255,12 +255,13 @@ require_once ('connect_db.php');
               <input type="radio" class="styled" name="tod" id = "morning" value="morning" checked><label for="morning">Morning</label>
             </div>
             <div class="inline">
-              <input type="radio" class="styled" name="tod" id = "evening" value="hod"><label for="evening">Evening</label>
+              <input type="radio" class="styled" name="tod" id = "evening" value="evening"><label for="evening">Evening</label>
             </div>
             <span class="inline stretch"></span>
           </div>
           <div>
-            <input type="checkbox" name="labcheck" value="lab">Lab
+            <input type='hidden' value='0' name='lab'>
+            <input type="checkbox" name="lab" value="1">Lab
           </div>
           <div class="blocktext info"></div>
           <div class="center button">
@@ -371,12 +372,13 @@ require_once ('connect_db.php');
               <input type="radio" class="styled" name="tod" id = "morning" value="morning" checked><label for="morning">Morning</label>
             </div>
             <div class="inline">
-              <input type="radio" class="styled" name="tod" id = "evening" value="hod"><label for="evening">Evening</label>
+              <input type="radio" class="styled" name="tod" id = "evening" value="evening"><label for="evening">Evening</label>
             </div>
             <span class="inline stretch"></span>
           </div>
           <div>
-            <input type="checkbox" name="labcheck" value="lab">Lab
+            <input type='hidden' value='0' name='lab'>
+            <input type="checkbox" name="lab" value="1">Lab
           </div>
           <div class="blocktext info"></div>
           <div class="center button">
