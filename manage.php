@@ -61,6 +61,7 @@ require_once ('connect_db.php');
       <li class="limenu"><a href="manage.php?action=faculty">Manage Faculty</a></li>
       <li class="limenu"><a href="manage.php?action=batches">Manage Batches</a></li>
       <li class="limenu"><a href="manage.php?action=rooms">Manage Rooms</a></li>
+      <li class="limenu"><a href="manage.php?action=slot_groups">Manage Slot Groups</a></li>
       <li class="limenu"><a href="faculty.php">Manage Courses</a></li>
       <li class="limenu"><a href="allocate.php">Allocate Timetable</a></li>
       <li class="limenu"><a href="./">View Timetable</a></li>
@@ -109,7 +110,7 @@ require_once ('connect_db.php');
       <div class="avatar"><div class="icon key"></div></div>
       <div class="title">Change Faculty Access</div>
       <div class="elements">
-        <form method="post" action="register.php?action=changeLevel">
+        <form method="post" action="register.php?action=changeLevel" >
           <select name="uName" id="fac_level" class="updateSelect stretch" data-placeholder="Choose Faculty..." required>
             <option label="Choose Faculty..."></option>
             <?php
@@ -150,6 +151,256 @@ require_once ('connect_db.php');
             ?>
           </select>
           <input type="hidden" id="confirm_msg" value="Are you sure you want to delete the selected faculty?">
+          <div class="blocktext info"></div>
+          <div class="center button">
+            <button>Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  <?php elseif(valueCheck('action','slot_groups')) : ?>
+    <div class="box">
+      <div class="boxbg"></div>
+      <div class="avatar"><div class="icon add"></div></div>
+      <div class="title">Add Slot Group</div>
+      <div class="elements">
+        <form method="post" action="slot_groups.php?action=add" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
+          <input type="text" name="add_slot_id" class="styled uInfo" placeholder="Slot Group ID" required/>
+          <div>
+            <div>
+              <select name="add_slot_1_day" class="updateSelect stretch" data-placeholder="Choose Slot 1 Day..." required>
+                <option label="Choose Slot 1 Day..."></option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thrusday</option>
+                <option value="5">Friday</option>
+              </select>
+            </div>
+            <div>
+              <select name="add_slot_1_range" class="updateSelect stretch" data-placeholder="Choose Slot 1 Range..." required>
+                <option label="Choose Slot 1 Range..."></option>
+                <option value="0900,0955">09:00 - 09:55</option>
+                <option value="1000,1055">10:00 - 10:55</option>
+                <option value="1100,1155">11:00 - 11:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1430,1555">14:30 - 15:55</option>
+                <option value="1600,1725">16:00 - 17:25</option>
+                <option value="1730,1900">17:30 - 19:00</option>
+                <option value="1900,2030">19:00 - 20:30</option>
+                <option value="1430,1725">14:30 - 17:25</option>
+                <option value="0900,1155">09:00 - 11:55</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div>
+              <select name="add_slot_2_day" class="updateSelect stretch" data-placeholder="Choose Slot 2 Day...">
+                <option label="Choose Slot 2 Day..."></option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thrusday</option>
+                <option value="5">Friday</option>
+              </select>
+            </div>
+            <div>
+              <select name="add_slot_2_range" class="updateSelect stretch" data-placeholder="Choose Slot 2 Range...">
+                <option label="Choose Slot 1 Range..."></option>
+                <option value="0900,0955">09:00 - 09:55</option>
+                <option value="1000,1055">10:00 - 10:55</option>
+                <option value="1100,1155">11:00 - 11:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1430,1555">14:30 - 15:55</option>
+                <option value="1600,1725">16:00 - 17:25</option>
+                <option value="1730,1900">17:30 - 19:00</option>
+                <option value="1900,2030">19:00 - 20:30</option>
+                <option value="1430,1725">14:30 - 17:25</option>
+                <option value="0900,1155">09:00 - 11:55</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div>
+              <select name="add_slot_3_day" class="updateSelect stretch" data-placeholder="Choose Slot 3 Day...">
+                <option label="Choose Slot 3 Day..."></option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thrusday</option>
+                <option value="5">Friday</option>
+              </select>
+            </div>
+            <div>
+              <select name="add_slot_3_range" class="updateSelect stretch" data-placeholder="Choose Slot 3 Range...">
+                <option label="Choose Slot 1 Range..."></option>
+                <option value="0900,0955">09:00 - 09:55</option>
+                <option value="1000,1055">10:00 - 10:55</option>
+                <option value="1100,1155">11:00 - 11:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1430,1555">14:30 - 15:55</option>
+                <option value="1600,1725">16:00 - 17:25</option>
+                <option value="1730,1900">17:30 - 19:00</option>
+                <option value="1900,2030">19:00 - 20:30</option>
+                <option value="1430,1725">14:30 - 17:25</option>
+                <option value="0900,1155">09:00 - 11:55</option>
+              </select>
+            </div>
+          </div>
+          <div style="text-align: justify;height: 18px">
+            <div class="inline">
+              <input type="radio" class="styled" name="add_tod" id = "morning" value="morning" checked><label for="morning">Morning</label>
+            </div>
+            <div class="inline">
+              <input type="radio" class="styled" name="add_tod" id = "evening" value="evening"><label for="evening">Evening</label>
+            </div>
+            <span class="inline stretch"></span>
+          </div>
+          <div>
+            <input type='hidden' value='0' name='add_lab'>
+            <input type="checkbox" name="add_lab" value="1">Lab
+          </div>
+          <div class="blocktext info"></div>
+          <div class="center button">
+            <button>Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="box">
+      <div class="boxbg"></div>
+      <div class="avatar"><div class="icon key"></div></div>
+      <div class="title">Edit Slot Group</div>
+      <div class="elements">
+        <form method="post" action="slot_groups.php?action=edit" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
+          <select name="edit_slot_id" class="updateSelect stretch" data-placeholder="Choose Slot Group..." required>
+            <option label="Choose Slot Group..."></option>
+            <?php
+            foreach($db->query('SELECT * FROM slot_groups') as $slot)
+              echo "<option value=\"{$slot['id']}\">{$slot['id']} </option>"
+            ?>
+          </select>
+          <div>
+            <div>
+              <select name="edit_slot_1_day" class="updateSelect stretch" data-placeholder="Choose Slot 1 Day..." required>
+                <option label="Choose Slot 1 Day..."></option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thrusday</option>
+                <option value="5">Friday</option>
+              </select>
+            </div>
+            <div>
+              <select name="edit_slot_1_range" class="updateSelect stretch" data-placeholder="Choose Slot 1 Range..." required>
+                <option label="Choose Slot 1 Range..."></option>
+                <option value="0900,0955">09:00 - 09:55</option>
+                <option value="1000,1055">10:00 - 10:55</option>
+                <option value="1100,1155">11:00 - 11:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1430,1555">14:30 - 15:55</option>
+                <option value="1600,1725">16:00 - 17:25</option>
+                <option value="1730,1900">17:30 - 19:00</option>
+                <option value="1900,2030">19:00 - 20:30</option>
+                <option value="1430,1725">14:30 - 17:25</option>
+                <option value="0900,1155">09:00 - 11:55</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div>
+              <select name="edit_slot_2_day" class="updateSelect stretch" data-placeholder="Choose Slot 2 Day...">
+                <option label="Choose Slot 2 Day..."></option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thrusday</option>
+                <option value="5">Friday</option>
+              </select>
+            </div>
+            <div>
+              <select name="edit_slot_2_range" class="updateSelect stretch" data-placeholder="Choose Slot 2 Range...">
+                <option label="Choose Slot 1 Range..."></option>
+                <option value="0900,0955">09:00 - 09:55</option>
+                <option value="1000,1055">10:00 - 10:55</option>
+                <option value="1100,1155">11:00 - 11:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1430,1555">14:30 - 15:55</option>
+                <option value="1600,1725">16:00 - 17:25</option>
+                <option value="1730,1900">17:30 - 19:00</option>
+                <option value="1900,2030">19:00 - 20:30</option>
+                <option value="1430,1725">14:30 - 17:25</option>
+                <option value="0900,1155">09:00 - 11:55</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div>
+              <select name="edit_slot_3_day" class="updateSelect stretch" data-placeholder="Choose Slot 3 Day...">
+                <option label="Choose Slot 3 Day..."></option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thrusday</option>
+                <option value="5">Friday</option>
+              </select>
+            </div>
+            <div>
+              <select name="edit_slot_3_range" class="updateSelect stretch" data-placeholder="Choose Slot 3 Range...">
+                <option label="Choose Slot 1 Range..."></option>
+                <option value="0900,0955">09:00 - 09:55</option>
+                <option value="1000,1055">10:00 - 10:55</option>
+                <option value="1100,1155">11:00 - 11:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1200,1255">12:00 - 12:55</option>
+                <option value="1430,1555">14:30 - 15:55</option>
+                <option value="1600,1725">16:00 - 17:25</option>
+                <option value="1730,1900">17:30 - 19:00</option>
+                <option value="1900,2030">19:00 - 20:30</option>
+                <option value="1430,1725">14:30 - 17:25</option>
+                <option value="0900,1155">09:00 - 11:55</option>
+              </select>
+            </div>
+          </div>
+          <div style="text-align: justify;height: 18px">
+            <div class="inline">
+              <input type="radio" class="styled" name="edit_tod" id = "edit_morning" value="morning" checked><label for="edit_morning">Morning</label>
+            </div>
+            <div class="inline">
+              <input type="radio" class="styled" name="edit_tod" id = "edit_evening" value="evening"><label for="edit_evening">Evening</label>
+            </div>
+            <span class="inline stretch"></span>
+          </div>
+          <div>
+            <input type='hidden' value='0' name='edit_lab'>
+            <input type="checkbox" name="edit_lab" value="1">Lab
+          </div>
+          <div class="blocktext info"></div>
+          <div class="center button">
+            <button>Change</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="box">
+      <div class="boxbg"></div>
+      <div class="avatar"><div class="icon remove"></div></div>
+      <div class="title">Delete Slot Group</div>
+      <div class="elements">
+        <form method="post" action="slot_groups.php?action=delete" class="confirm" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
+          <select name="del_slot_id" class="updateSelect stretch" data-placeholder="Choose Slot Group..." required>
+            <option label="Choose Slot Group..."></option>
+            <?php
+            foreach($db->query('SELECT * FROM slot_groups') as $slot)
+              echo "<option value=\"{$slot['id']}\">{$slot['id']} </option>"
+            ?>
+          </select>
+          <input type="hidden" id="confirm_msg" value="Are you sure you want to delete the selected slot group?">
           <div class="blocktext info"></div>
           <div class="center button">
             <button>Delete</button>
