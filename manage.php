@@ -165,10 +165,10 @@ require_once ('connect_db.php');
       <div class="title">Add Slot Group</div>
       <div class="elements">
         <form method="post" action="slot_groups.php?action=add">
-          <input type="text" name="slot_id" class="styled uInfo" placeholder="Slot Group ID" required/>
+          <input type="text" name="add_slot_id" class="styled uInfo" placeholder="Slot Group ID" required/>
           <div>
             <div>
-              <select name="slot_1_day" class="updateSelect stretch" data-placeholder="Choose Slot 1 Day..." required>
+              <select name="add_slot_1_day" class="updateSelect stretch" data-placeholder="Choose Slot 1 Day..." required>
                 <option label="Choose Slot 1 Day..."></option>
                 <option value="1">Monday</option>
                 <option value="2">Tuesday</option>
@@ -178,7 +178,7 @@ require_once ('connect_db.php');
               </select>
             </div>
             <div>
-              <select name="slot_1_range" class="updateSelect stretch" data-placeholder="Choose Slot 1 Range..." required>
+              <select name="add_slot_1_range" class="updateSelect stretch" data-placeholder="Choose Slot 1 Range..." required>
                 <option label="Choose Slot 1 Range..."></option>
                 <option value="0900,0955">09:00 - 09:55</option>
                 <option value="1000,1055">10:00 - 10:55</option>
@@ -196,7 +196,7 @@ require_once ('connect_db.php');
           </div>
           <div>
             <div>
-              <select name="slot_2_day" class="updateSelect stretch" data-placeholder="Choose Slot 2 Day...">
+              <select name="add_slot_2_day" class="updateSelect stretch" data-placeholder="Choose Slot 2 Day...">
                 <option label="Choose Slot 2 Day..."></option>
                 <option value="1">Monday</option>
                 <option value="2">Tuesday</option>
@@ -206,7 +206,7 @@ require_once ('connect_db.php');
               </select>
             </div>
             <div>
-              <select name="slot_2_range" class="updateSelect stretch" data-placeholder="Choose Slot 2 Range...">
+              <select name="add_slot_2_range" class="updateSelect stretch" data-placeholder="Choose Slot 2 Range...">
                 <option label="Choose Slot 1 Range..."></option>
                 <option value="0900,0955">09:00 - 09:55</option>
                 <option value="1000,1055">10:00 - 10:55</option>
@@ -224,7 +224,7 @@ require_once ('connect_db.php');
           </div>
           <div>
             <div>
-              <select name="slot_3_day" class="updateSelect stretch" data-placeholder="Choose Slot 3 Day...">
+              <select name="add_slot_3_day" class="updateSelect stretch" data-placeholder="Choose Slot 3 Day...">
                 <option label="Choose Slot 3 Day..."></option>
                 <option value="1">Monday</option>
                 <option value="2">Tuesday</option>
@@ -234,7 +234,7 @@ require_once ('connect_db.php');
               </select>
             </div>
             <div>
-              <select name="slot_3_range" class="updateSelect stretch" data-placeholder="Choose Slot 3 Range...">
+              <select name="add_slot_3_range" class="updateSelect stretch" data-placeholder="Choose Slot 3 Range...">
                 <option label="Choose Slot 1 Range..."></option>
                 <option value="0900,0955">09:00 - 09:55</option>
                 <option value="1000,1055">10:00 - 10:55</option>
@@ -252,16 +252,16 @@ require_once ('connect_db.php');
           </div>
           <div style="text-align: justify;height: 18px">
             <div class="inline">
-              <input type="radio" class="styled" name="tod" id = "morning" value="morning" checked><label for="morning">Morning</label>
+              <input type="radio" class="styled" name="add_tod" id = "morning" value="morning" checked><label for="morning">Morning</label>
             </div>
             <div class="inline">
-              <input type="radio" class="styled" name="tod" id = "evening" value="evening"><label for="evening">Evening</label>
+              <input type="radio" class="styled" name="add_tod" id = "evening" value="evening"><label for="evening">Evening</label>
             </div>
             <span class="inline stretch"></span>
           </div>
           <div>
-            <input type='hidden' value='0' name='lab'>
-            <input type="checkbox" name="lab" value="1">Lab
+            <input type='hidden' value='0' name='add_lab'>
+            <input type="checkbox" name="add_lab" value="1">Lab
           </div>
           <div class="blocktext info"></div>
           <div class="center button">
@@ -276,7 +276,7 @@ require_once ('connect_db.php');
       <div class="title">Edit Slot Group</div>
       <div class="elements">
         <form method="post" action="slot_groups.php?action=edit">
-          <select name="slot_id" class="updateSelect stretch" data-placeholder="Choose Slot Group..." required>
+          <select name="edit_slot_id" class="updateSelect stretch" data-placeholder="Choose Slot Group..." required>
             <option label="Choose Slot Group..."></option>
             <?php
             foreach($db->query('SELECT * FROM slot_groups') as $slot)
@@ -285,7 +285,7 @@ require_once ('connect_db.php');
           </select>
           <div>
             <div>
-              <select name="slot_1_day" class="updateSelect stretch" data-placeholder="Choose Slot 1 Day..." required>
+              <select name="edit_slot_1_day" class="updateSelect stretch" data-placeholder="Choose Slot 1 Day..." required>
                 <option label="Choose Slot 1 Day..."></option>
                 <option value="1">Monday</option>
                 <option value="2">Tuesday</option>
@@ -295,7 +295,7 @@ require_once ('connect_db.php');
               </select>
             </div>
             <div>
-              <select name="slot_1_range" class="updateSelect stretch" data-placeholder="Choose Slot 1 Range..." required>
+              <select name="edit_slot_1_range" class="updateSelect stretch" data-placeholder="Choose Slot 1 Range..." required>
                 <option label="Choose Slot 1 Range..."></option>
                 <option value="0900,0955">09:00 - 09:55</option>
                 <option value="1000,1055">10:00 - 10:55</option>
@@ -313,7 +313,7 @@ require_once ('connect_db.php');
           </div>
           <div>
             <div>
-              <select name="slot_2_day" class="updateSelect stretch" data-placeholder="Choose Slot 2 Day...">
+              <select name="edit_slot_2_day" class="updateSelect stretch" data-placeholder="Choose Slot 2 Day...">
                 <option label="Choose Slot 2 Day..."></option>
                 <option value="1">Monday</option>
                 <option value="2">Tuesday</option>
@@ -323,7 +323,7 @@ require_once ('connect_db.php');
               </select>
             </div>
             <div>
-              <select name="slot_2_range" class="updateSelect stretch" data-placeholder="Choose Slot 2 Range...">
+              <select name="edit_slot_2_range" class="updateSelect stretch" data-placeholder="Choose Slot 2 Range...">
                 <option label="Choose Slot 1 Range..."></option>
                 <option value="0900,0955">09:00 - 09:55</option>
                 <option value="1000,1055">10:00 - 10:55</option>
@@ -341,7 +341,7 @@ require_once ('connect_db.php');
           </div>
           <div>
             <div>
-              <select name="slot_3_day" class="updateSelect stretch" data-placeholder="Choose Slot 3 Day...">
+              <select name="edit_slot_3_day" class="updateSelect stretch" data-placeholder="Choose Slot 3 Day...">
                 <option label="Choose Slot 3 Day..."></option>
                 <option value="1">Monday</option>
                 <option value="2">Tuesday</option>
@@ -351,7 +351,7 @@ require_once ('connect_db.php');
               </select>
             </div>
             <div>
-              <select name="slot_3_range" class="updateSelect stretch" data-placeholder="Choose Slot 3 Range...">
+              <select name="edit_slot_3_range" class="updateSelect stretch" data-placeholder="Choose Slot 3 Range...">
                 <option label="Choose Slot 1 Range..."></option>
                 <option value="0900,0955">09:00 - 09:55</option>
                 <option value="1000,1055">10:00 - 10:55</option>
@@ -369,16 +369,16 @@ require_once ('connect_db.php');
           </div>
           <div style="text-align: justify;height: 18px">
             <div class="inline">
-              <input type="radio" class="styled" name="tod" id = "morning" value="morning" checked><label for="morning">Morning</label>
+              <input type="radio" class="styled" name="edit_tod" id = "edit_morning" value="morning" checked><label for="edit_morning">Morning</label>
             </div>
             <div class="inline">
-              <input type="radio" class="styled" name="tod" id = "evening" value="evening"><label for="evening">Evening</label>
+              <input type="radio" class="styled" name="edit_tod" id = "edit_evening" value="evening"><label for="edit_evening">Evening</label>
             </div>
             <span class="inline stretch"></span>
           </div>
           <div>
-            <input type='hidden' value='0' name='lab'>
-            <input type="checkbox" name="lab" value="1">Lab
+            <input type='hidden' value='0' name='edit_lab'>
+            <input type="checkbox" name="edit_lab" value="1">Lab
           </div>
           <div class="blocktext info"></div>
           <div class="center button">
@@ -393,7 +393,7 @@ require_once ('connect_db.php');
       <div class="title">Delete Slot Group</div>
       <div class="elements">
         <form method="post" action="slot_groups.php?action=delete" class="confirm">
-          <select name="slot_id" class="updateSelect stretch" data-placeholder="Choose Slot Group..." required>
+          <select name="del_slot_id" class="updateSelect stretch" data-placeholder="Choose Slot Group..." required>
             <option label="Choose Slot Group..."></option>
             <?php
             foreach($db->query('SELECT * FROM slot_groups') as $slot)

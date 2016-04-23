@@ -11,19 +11,19 @@ if(!sessionCheck('level','dean'))
   die();
 if(valueCheck('action','add'))
 {
-  $var = "[[" . $_POST['slot_1_day'] . "," . $_POST['slot_1_range'] . "]";  
-  if($_POST['slot_2_day']!='') {
-    $var = $var . ",[" . $_POST['slot_2_day'] . "," . $_POST['slot_2_range'] . "]";
+  $var = "[[" . $_POST['add_slot_1_day'] . "," . $_POST['add_slot_1_range'] . "]";  
+  if($_POST['add_slot_2_day']!='') {
+    $var = $var . ",[" . $_POST['add_slot_2_day'] . "," . $_POST['add_slot_2_range'] . "]";
   }
-  if($_POST['slot_3_day']!='') {
-    $var = $var . ",[" . $_POST['slot_3_day'] . "," . $_POST['slot_3_range'] . "]";
+  if($_POST['add_slot_3_day']!='') {
+    $var = $var . ",[" . $_POST['add_slot_3_day'] . "," . $_POST['add_slot_3_range'] . "]";
   }
   $var = $var . "]";
 
   try{
     $query = $db->prepare('INSERT INTO slot_groups(id,slots,lab,tod) values (?,?,?,?)');
-    $query->execute([$_POST['slot_id'],$var, $_POST['lab'], $_POST['tod']]);
-    postResponse("addOpt","Slot Group Added.",[$_POST['id'],$var, $_POST['lab'], $_POST['tod']]);    
+    $query->execute([$_POST['add_slot_id'],$var, $_POST['add_lab'], $_POST['add_tod']]);
+    postResponse("addOpt","Slot Group Added.",[$_POST['add_slot_id'],$var, $_POST['add_lab'], $_POST['add_tod']]);    
   }
   catch(PDOException $e)
   {
@@ -36,19 +36,19 @@ if(valueCheck('action','add'))
 }
 if(valueCheck('action','edit'))
 {
-  $var = "[[" . $_POST['slot_1_day'] . "," . $_POST['slot_1_range'] . "]";  
-  if($_POST['slot_2_day']!='') {
-    $var = $var . ",[" . $_POST['slot_2_day'] . "," . $_POST['slot_2_range'] . "]";
+  $var = "[[" . $_POST['edit_slot_1_day'] . "," . $_POST['edit_slot_1_range'] . "]";  
+  if($_POST['edit_slot_2_day']!='') {
+    $var = $var . ",[" . $_POST['edit_slot_2_day'] . "," . $_POST['edit_slot_2_range'] . "]";
   }
-  if($_POST['slot_3_day']!='') {
-    $var = $var . ",[" . $_POST['slot_3_day'] . "," . $_POST['slot_3_range'] . "]";
+  if($_POST['edit_slot_3_day']!='') {
+    $var = $var . ",[" . $_POST['edit_slot_3_day'] . "," . $_POST['edit_slot_3_range'] . "]";
   }
   $var = $var . "]";
 
   try{
     $query = $db->prepare('UPDATE slot_groups SET slots = ?, lab = ?, tod = ? WHERE id = ?');
-    $query->execute([$var, $_POST['lab'], $_POST['tod'], $_POST['slot_id']]);
-    postResponse("addOpt","Slot Group updated.",[$_POST['id'],$var, $_POST['lab'], $_POST['tod']]);    
+    $query->execute([$var, $_POST['edit_lab'], $_POST['edit_tod'], $_POST['edit_slot_id']]);
+    postResponse("addOpt","Slot Group updated.",[$_POST['edit_slot_id'],$var, $_POST['edit_lab'], $_POST['edit_tod']]);    
   }
   catch(PDOException $e)
   {
@@ -59,7 +59,7 @@ if(valueCheck('action','edit'))
 elseif(valueCheck('action','delete'))
 {
   $query = $db->prepare('DELETE FROM slot_groups where id = ?');
-  $query->execute([$_POST['slot_id']]);
+  $query->execute([$_POST['del_slot_id']]);
   postResponse("removeOpt","Slot Group deleted.");
 }
 ?>
