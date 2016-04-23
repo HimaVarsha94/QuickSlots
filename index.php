@@ -27,6 +27,7 @@ if(!empty($_GET['batch']))
   <link rel="stylesheet" type="text/css" href="css/dashboard.css">
   <link rel="stylesheet" type="text/css" href="css/chosen.css">
   <link rel="stylesheet" type="text/css" href="css/table.css">
+  <script type="text/javascript" src="js/html2canvas.js"></script>
   <script type="text/javascript" src="js/jquery.min.js" ></script>
   <script type="text/javascript" src="js/form.js"></script>
   <script type="text/javascript" src="js/chosen.js"></script>
@@ -34,6 +35,16 @@ if(!empty($_GET['batch']))
   <script type="text/javascript">
   $(function()
   {
+      // prerender the timetable into PNG for downloading
+      html2canvas([document.getElementById('timetable')], {
+        onrendered: function (canvas) {
+          var data = canvas.toDataURL('image/png');
+          $('#savepng')
+            .attr('href', data)
+            .attr('download', 'timetable.png');
+        }
+      });
+
       $("#main_menu a").each(function() {
         if($(this).prop('href') == window.location.href || window.location.href.search($(this).prop('href'))>-1)
         {
@@ -293,11 +304,9 @@ if(!empty($_GET['batch']))
         <textarea id="sharelink" style="vertical-align: middle;width:420px;height: 35px;resize:none" readonly onclick="this.focus;this.select()"></textarea>
         </div>
         <?php if(sessionCheck('logged_in')): ?>
-        <form action="download.php" method="post" id="download" class="submit">
-          <input type="hidden" name="filter">
-          <input type="hidden" name="filename">
-          <button>Download Timetable</button>
-        </form>
+        <a id="savepng">
+          <button>Save as PNG</button>
+        </a>
         <?php endif;?>
       </div>
       <div id="footer" style="position: relative">Powered by <a href="https://github.com/0verrider/QuickSlots">QuickSlots v1.0</a></div>
