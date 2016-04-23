@@ -336,6 +336,10 @@ HTML;
     // var dayTime = document.getElementBy
  		//Event Listener handler
    	var setSlots = function(parentId){
+   		if(parentId=="everyone"){
+   			$("input[type='radio'][value='anytime']").attr('checked', true);
+   		}
+
    		// console.log("here");
         var optionNode = $("#courseId").children('option[value="' + $("#courseId").val() + '"]')[0];
         courseType = $(optionNode).attr('data');
@@ -356,9 +360,9 @@ HTML;
 
         if(courseType=="nothing"){
             console.log("nothing")
-
-            slots.html('<option value="select_slot">Select Slot</option>');
-            return 0;
+            slots.html('');
+            slots.append('<option value="select_slot">Select Slot</option>');
+            return true;
         }
         console.log(parentId);
         if(parentId=="everyone")
@@ -376,7 +380,8 @@ HTML;
 
 
         console.log(slots);
-        slots.html('<option value="select_slot">Select Slot</option>');
+        slots.html('');
+        slots.append('<option value="select_slot">Select Slot</option>');
         // slots.innerHTML = '<option value="select_slot">Select Slot</option>';
         for(var i = 0; i < allSlots.length; i++) {
             var singleSlot = allSlots[i];
