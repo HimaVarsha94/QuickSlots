@@ -365,6 +365,11 @@ HTML;
         var slot1 = $("#course_slot1")[0];
         var slot2 = $("#course_slot2")[0];
         var slot3 = $("#course_slot3")[0];
+
+        $(slot1).html('<option value="select_slot" label = " Select Slot"></option>');
+        $(slot2).html('<option value="select_slot" label = " Select Slot"></option>');
+        $(slot3).html('<option value="select_slot" label = " Select Slot"></option>');
+
         for(var i = 0; i < allSlots.length; i++) {
             // var singleSlot = allSlots[i];
             if( courseType == 'lab' && allSlots[i].lab == 1) { //checking if it is a lab course or not
@@ -386,11 +391,8 @@ HTML;
         }
 
    	var setSlots = function(parentId){
-   		// console.log("here");
         var optionNode = $("#courseId").children('option[value="' + $("#courseId").val() + '"]')[0];
         courseType = $(optionNode).attr('data');
-        // console.log(courseType);
-
         var slots;
         if(parentId == 'preference1')
             slots = $("#"+parentId).find("#course_slot1");
@@ -400,7 +402,6 @@ HTML;
             slots = $("#"+parentId).find("#course_slot3");
         // $(slots).trigger("chosen:updated");
         slots = slots[0];
-        console.log(slots);
         if(courseType=="nothing"){
             $(slots).html('');
             $(slots).append('<option label = "Select Slot"></option>');
@@ -435,7 +436,6 @@ HTML;
                 }
             } else if( allSlots[i].lab == 0 && courseType!='lab') { //checking
                 if(session_value == 'morning' && allSlots[i].tod == 'morning') {
-                    console.log("here");
                     $(slots).append( '<option value = "' + allSlots[i].id + '"> ' + allSlots[i].id + '</option>');
                     // $(slots).append( '<option value = "' + allSlots[i].id + '" label = "' + allSlots[i].id + '"></option>');
 
@@ -453,29 +453,10 @@ HTML;
         $(slots).trigger("chosen:updated");
    	}
     $("#courseId").change(function(){setAllSlots();});
- // 	// Handler for .ready() called.
- // 		//First try using addEventListener, the standard method to add a event listener:
- // 	if(courseId.addEventListener){
- // 		console.log("addEventListener");
- // 	  courseId.addEventListener("change", function(){setSlots("everyone");}, false);
- // 	}
- // 	//If it doesn't exist, try attachEvent, the IE way:
- // 	else if(courseId.attachEvent){
- // 		console.log("attachEvent");
- // 	  courseId.attachEvent("onchange", function(){setSlots("everyone");});
- // 	}
- // 	//Just use onchange if neither exist
- // 	else{
- // 		console.log("None");
- // 		courseId.onchange = function(){setSlots("everyone");};
- // 	}
     $('input[type=radio]').click(function(){
         var parentId = this.parentNode.id;
-        console.log(parentId);
         setSlots(parentId);
     });
-
-
  });
 
   </script>
@@ -522,6 +503,7 @@ HTML;
                 }
               ?>
           </select> <br/>
+
           <?php
             echo '<script>  var allSlots = new Array();';
             foreach($db->query('SELECT id, lab, tod FROM slot_groups')as $all_slots)
@@ -565,6 +547,7 @@ HTML;
 
               </select> <br/>
         </div>
+        <input type="hidden" id="confirm_msg" value="Are you sure you want to submit the preferences?">
         <p class="info"></p>
         <button type="submit" value="Submit">Submit</button>
       </form>
