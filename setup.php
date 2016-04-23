@@ -93,7 +93,7 @@ if($config)
           this.append_option({
             value: term,
             text: term
-          }); 
+          });
         },
         create_option_text: 'Add Department ',
         persistent_create_option: true});
@@ -117,7 +117,7 @@ if($config)
           <input type="password" name="db_pswd" class="styled pswd" required title="Please enter database password" placeholder="Database Password" />
           <input type="text" name="ldap_host" class="styled details" placeholder="LDAP Server" />
           <input type="text" name="ldap_dn" class="styled uInfo" placeholder="LDAP DN" />
-          <div class="blocktext info"></div> 
+          <div class="blocktext info"></div>
           <div class="center button">
             <button>Continue</button>
           </div>
@@ -143,7 +143,7 @@ if($config)
           </div>
           <input  type="password" name="pswd" class="styled pswd" required pattern="[^ ]{8,32}" title="8 to 32 characters without spaces" placeholder="Password" />
           <input type="password" class="styled pswd" required pattern="[^ ]{8,32}" title="8 to 32 characters without spaces" placeholder="Confirm password" />
-          <div class="blocktext info"></div> 
+          <div class="blocktext info"></div>
           <div class="center button">
             <button>Register</button>
           </div>
