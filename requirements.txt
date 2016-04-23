@@ -1,1 +1,2 @@
 PyMySQL==0.7.2
+munkres==1.0.7

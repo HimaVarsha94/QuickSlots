@@ -20,3 +20,12 @@ services:
       - "4000:80"
     volumes:
       - "./:/app"
+
+  adminer:
+      depends_on:
+        - mariadb
+      image: activatedgeek/adminer:latest
+      ports:
+        - "13306:80"
+      links:
+        - mariadb:db
