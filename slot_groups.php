@@ -34,6 +34,28 @@ if(valueCheck('action','add'))
   }
   
 }
+if(valueCheck('action','edit'))
+{
+  $var = "[[" . $_POST['slot_1_day'] . "," . $_POST['slot_1_range'] . "]";  
+  if($_POST['slot_2_day']!='') {
+    $var = $var . ",[" . $_POST['slot_2_day'] . "," . $_POST['slot_2_range'] . "]";
+  }
+  if($_POST['slot_3_day']!='') {
+    $var = $var . ",[" . $_POST['slot_3_day'] . "," . $_POST['slot_3_range'] . "]";
+  }
+  $var = $var . "]";
+
+  try{
+    $query = $db->prepare('UPDATE slot_groups SET slots = ?, lab = ?, tod = ? WHERE id = ?');
+    $query->execute([$var, $_POST['lab'], $_POST['tod'], $_POST['slot_id']]);
+    postResponse("addOpt","Slot Group updated.",[$_POST['id'],$var, $_POST['lab'], $_POST['tod']]);    
+  }
+  catch(PDOException $e)
+  {
+    postResponse("error",$e->errorInfo[2]);
+  }
+  
+}
 elseif(valueCheck('action','delete'))
 {
   $query = $db->prepare('DELETE FROM slot_groups where id = ?');
