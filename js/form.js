@@ -1,6 +1,8 @@
 /**
  * Handles all form submissions and validation that needs to be done via AJAX
  */
+
+
 $(function(){
     $("form").not(".submit").submit(function(e){
         changes = false;
@@ -20,16 +22,44 @@ $(function(){
                 message.hide();
                 message.addClass('error');
                 message.html("<b>&#10006; </b>&nbsp;Passwords do not match.");
-                message.show(400);    
+                message.show(400);
                 return false;
             }
-        button.fadeOut('fast');
+        // button.fadeOut('fast');
+        var validate = function() {
+            // console.log(form.attr('course_slot1'));
+            // console.log($('#courseId').val());
+            if($('#courseId').val() == "select_course") {
+                message.addClass('error');
+                message.html("<b>&#10006; </b>&nbsp; Select A Course");
+                message.show(400);
+                return false;
+            }
+
+            if($('#course_slot1').val() == "select_slot" && $('#course_slot2').val() == "select_slot" && $('#course_slot3').val() == "select_slot") {
+                message.addClass('error');
+                message.html("<b>&#10006; </b>&nbsp; Select Atleast one Slot");
+                message.show(400);
+                return false;
+            }
+            return true;
+        }
+
+        if(form.attr('name')=='preferencesForm'){
+            var valid = validate();
+            if (valid==false){
+                // button.fadeIn('fast');
+                return false;
+            }
+        }
         $.post(
             form.attr('action'),
             form.serialize(),
             function(reply){
                 button.fadeIn('fast');
+                console.log("Reply is " + reply);
                 reply=JSON.parse(reply);
+                console.log(reply);
                 if(reply[0]=="redirect")
                 {
                     window.location=reply[1];
@@ -52,7 +82,7 @@ $(function(){
                         $(".updateSelect").append($('<option>').html(opt[0]+" ("+opt[1]+")").val(val));
                         $(".updateSelect").prop("selectedIndex", -1);
                         $(".updateSelect").trigger("chosen:updated");
-                    }    
+                    }
                     else if(reply[0]=="removeOpt")
                     {
                         var optVal = $(".updateSelect",form).find('option:selected').val();
