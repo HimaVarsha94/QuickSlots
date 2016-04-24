@@ -87,7 +87,8 @@ if(!sessionCheck('level','faculty'))
               <li class="limenu"><a href="manage.php?action=departments">Manage Departments</a></li>
               <li class="limenu"><a href="manage.php?action=faculty">Manage Faculty</a></li>
               <li class="limenu"><a href="manage.php?action=batches">Manage Batches</a></li>
-              <li class="limenu"><a href="manage.php?action=rooms">Manage Rooms</a></li>';
+              <li class="limenu"><a href="manage.php?action=rooms">Manage Rooms</a></li>
+              <li class="limenu"><a href="manage.php?action=slot_groups">Manage Slot Groups</a></li>';
     ?>
               <li class="limenu"><a href="faculty.php">Manage Courses</a></li>
              <?php
