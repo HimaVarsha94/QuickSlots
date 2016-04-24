@@ -45,7 +45,7 @@
 
 * Chosen.js: Select Box Enhancer for jQuery (http://harvesthq.github.io/chosen/)
 
-* PyMySQL (0.7.2): Python Library for connecting to MySQL
+* PyMySQL (0.7.2): Python Library for connecting to MySQL ()
 
 * Munkres (1.0.7): Python Library for running Hungarian algorithm for scheduling
 
@@ -60,3 +60,13 @@
 * PHP Hypertext Preprocessor: Version 5.5 or higher recommended
 
 * Python: Version 2.7.6 or higher recommended
+
+--------------------------------------------------------------------------------
+                    Requirements Installation for Scheduler
+--------------------------------------------------------------------------------
+
+To install the packages for running the scheduler, execute
+
+`python
+  pip install -r requirements.txt
+`
