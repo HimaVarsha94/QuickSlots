@@ -59,7 +59,7 @@ $(function(){
                 button.fadeIn('fast');
                 console.log("Reply is " + reply);
                 reply=JSON.parse(reply);
-                console.log(reply);
+                console.log(reply[0]);
                 if(reply[0]=="redirect")
                 {
                     window.location=reply[1];
@@ -76,22 +76,31 @@ $(function(){
                     if(reply[0]=="addOpt")
                     {
                         var opt = JSON.parse(reply[2]);
-                        var val =opt[1];
-                        if(reply[1]=="Room Added" || reply[1]=="Batch Added")
-                            val=opt[0];
-                        $(".updateSelect").append($('<option>').html(opt[0]+" ("+opt[1]+")").val(val));
-                        $(".updateSelect").prop("selectedIndex", -1);
-                        $(".updateSelect").trigger("chosen:updated");
+                        if(opt!=[]){
+                            var val =opt[1];
+                            // if(opt[])
+                            if(reply[1]=="Room Added" || reply[1]=="Batch Added")
+                                val=opt[0];
+                            $(".updateSelect").append($('<option>').html(opt[0]+" ("+opt[1]+")").val(val));
+                            $(".updateSelect").prop("selectedIndex", -1);
+                            $(".updateSelect").trigger("chosen:updated");
+                        }
+                        setTimeout(function(){ window.location.reload(); }, 1000);
+
                     }
                     else if(reply[0]=="removeOpt")
                     {
                         var optVal = $(".updateSelect",form).find('option:selected').val();
                         $("option[value='"+optVal+"']",".updateSelect").remove();
                         $(".updateSelect").trigger("chosen:updated");
+                        setTimeout(function(){ window.location.reload(); }, 1000);
+
                     }
                     else if(reply[0]=="updateOpt")
                     {
                       $("option:selected",form).attr('class',$("input[type=radio]:checked",form).val());
+                      setTimeout(function(){ window.location.reload(); }, 1000);
+
                     }
                     else if(reply[0]=="updateGrid")
                         drawGrid('true');

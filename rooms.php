@@ -36,7 +36,8 @@ elseif(valueCheck('action', 'update'))
     $_POST['lab'] = 0;
   $query = $db->prepare('UPDATE rooms SET capacity=:capacity, lab=:lab where room_name=:room_name');
   $query->execute(array(':capacity' => $_POST['capacity'], ':room_name' => $_POST['room_name'], ':lab' => $_POST['updateLab']));
-  // postResponse("updateOpt", "Room Updated", [$_POST['room_name']])
+
+  postResponse("updateOpt", "Room Updated", [$_POST['room_name']]);
 }
 
 elseif(valueCheck('action','delete'))
