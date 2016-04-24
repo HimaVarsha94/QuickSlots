@@ -166,6 +166,10 @@ if(!empty($_GET['batch']))
           $('#nav_bar').hide();
         }
       });
+
+      $("#userIcon").click(function() {
+        $("#userMenu").toggle();
+      });
   })
   </script>
   <?php if(sessionCheck('logged_in')):?>
@@ -213,8 +217,14 @@ if(!empty($_GET['batch']))
   <div id="header">
     <div id="account_info">
     <?php if(sessionCheck('logged_in')):?>
-      <div class="infoTab"><div class="fixer"></div><div class="dashIcon usr"></div><div id="fName"><?=$_SESSION['fName']?></div></div>
-      <div class="infoTab"><div class="fixer"></div><a href="logout.php" id="logout"><div class="dashIcon logout"></div><div>Logout</div></a></div>
+      <div class="infoTab">
+        <div class="fixer"></div>
+        <div id="fName"><?=$_SESSION['fName']?></div>
+        <div class="dashIcon usr" id="userIcon" style="cursor:pointer;"></div>
+        <div id="userMenu">
+          <p><a href="/logout.php">Logout</a></p>
+        </div>
+      </div>
     <?php else: ?>
       <div class="infoTab"><div class="fixer"></div><a href="login.php"><div class="dashIcon logout"></div><div>Login</div></a></div>
     <?php endif; ?>

@@ -160,6 +160,10 @@ HTML;
       }
     });
 
+    $("#userIcon").click(function() {
+      $("#userMenu").toggle();
+    });
+
     $("#scheduler").click(function(e) {
       e.preventDefault();
 
@@ -357,9 +361,14 @@ HTML;
   <div id="shadowhead">Allocate Timetable</div>
   <div id="header">
     <div id="account_info">
-      <div class="infoTab"><div class="fixer"></div><div class="dashIcon usr"></div><div id="fName"><?=$_SESSION['fName']?></div></div>
-      <div class="infoTab"><div class="fixer"></div><a href="logout.php" id="logout"><div class="dashIcon logout"></div><div>Logout</div></a></div>
-    </div>
+      <div class="infoTab">
+        <div class="fixer"></div>
+        <div id="fName"><?=$_SESSION['fName']?></div>
+        <div class="dashIcon usr" id="userIcon" style="cursor:pointer;"></div>
+        <div id="userMenu">
+          <p><a href="/logout.php">Logout</a></p>
+        </div>
+      </div>    </div>
     <div id="header_text" style="box-sizing:border-box;padding:5px;">
       <img id="topmenu" src="images/information.png" style="height:30px;width:auto;float:left;margin-top:3px;margin-left:15px;cursor:pointer;"></img>
       <p style="float:left;margin-top:-5px;margin-left:15px;">QuickSlots</p>

@@ -125,17 +125,9 @@ a
   display: inline-block;
   vertical-align: middle;
 }
-.infoTab a
-{
-  color: #999;
-}
 .fixer
 {
   height: 45px;
-}
-#logout
-{
-  color: #d93e38;
 }
 #shadowhead
 {
@@ -183,4 +175,26 @@ a
 }
 #fName {
   color: black;
+}
+
+#userMenu {
+  background: #0d77e3 !important;
+  box-sizing: border-box;
+  padding: 0.5em;
+  position: absolute;
+  top: 45px;
+  right: 25px;
+  z-index: 48;
+  display: none;
+  background: white;
+  color: white;
+  width: 100px;
+}
+
+#userMenu > p {
+  margin: 0;
+}
+
+#userMenu > p > a {
+  color: white !important;
 }
