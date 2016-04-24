@@ -49,11 +49,11 @@ a
   margin: 0;
   padding: 0;
   width: 100%;
-  background: #0d77e3;
+  background: #2390ff;
 }
 .main_menu li.current
 {
-  background-image: #0d77e3;
+  background-image: #2398ff;
   background-repeat: no-repeat;
 }
 .main_menu li:hover
@@ -85,7 +85,7 @@ a
 }
 #header
 {
-  box-shadow: 0 2px 15px #333333;
+  box-shadow: 0 -20px 50px #333333;
   color: #fff;
   height: 45px;
   min-width: 768px;
@@ -101,7 +101,7 @@ a
 {
   overflow: auto;
   padding-left: 0;
-  color: #2398CD;
+  color: #2390ff;
 }
 #account_info
 {
@@ -113,7 +113,6 @@ a
 .infoTab
 {
   font-size: 13px;
-  border-left: 1px solid #333333;
   height: 45px;
   padding: 0 15px;
   cursor: default;
@@ -133,7 +132,7 @@ a
 {
   height: 58px;
   position: absolute;
-  top: 45px;
+  top: 60px;
   left: 0;
   right: 0;
   text-align: center;
@@ -164,7 +163,7 @@ a
   display: inline-block;
   padding: 15px 5px 15px 15px;
   white-space: nowrap;
-  margin-top: 60px;
+  margin-top: 80px;
   position: relative;
   height: 50%;
   background: white;
@@ -174,11 +173,12 @@ a
   white-space: normal;
 }
 #fName {
-  color: black;
+  color: #1E88E5;
+  margin-right: 15px;
 }
 
 #userMenu {
-  background: #0d77e3 !important;
+  background: #2390ff !important;
   box-sizing: border-box;
   padding: 0.5em;
   position: absolute;
