@@ -63,7 +63,7 @@ if($_POST)
         }
         if($current["days"]<$_POST["days"])
         {
-          $query = $db->prepare('INSERT INTO slots VALUES (?,?,?,?)');  
+          $query = $db->prepare('INSERT INTO slots VALUES (?,?,?,?)');
           for($d=$current["days"]+1;$d<=$_POST["days"];$d++)
             for($s=1;$s<=$current["slots"];$s++)
                 $query->execute([$current['table_name'],$d,$s,'active']);
@@ -107,6 +107,10 @@ if($_POST)
 
     $query = $db->prepare('DELETE from timetables where table_name=? AND active=0');
     $query->execute([$_POST['table_name']]);
+    $query = $db->prepare('DELETE from slot_allocs where table_name=?');
+    $query->execute([$_POST['table_name']]);
+    $query = $db->prepare('DELETE from slots where table_name=?');
+    $query->execute([$_POST['table_name']]);
     if($query->rowCount())
     {
       postResponse("removeOpt",'Timetable deleted');
@@ -135,7 +139,7 @@ if($_POST)
   $(function()
   {
       $("#main_menu a").each(function() {
-          if($(this).prop('href') == window.location.href || window.location.href.search($(this).prop('href'))>-1)  
+          if($(this).prop('href') == window.location.href || window.location.href.search($(this).prop('href'))>-1)
           {
               $(this).parent().addClass('current');
               document.title+= " | " + this.innerHTML;
@@ -162,7 +166,7 @@ if($_POST)
       $("#start_min").val("<?=$current['start_min']?>");
       $("#start_mer").val("<?=$current['start_mer']?>");
       $("select","#table_conf").chosen({no_results_text: "Invalid Time"});
-      <?php 
+      <?php
         echo "drawGrid('{$current['table_name']}');\n";
       ?>
       $("#timetable").on("click", ".cell.blue", function()
@@ -312,7 +316,7 @@ if($_POST)
       <div id="backup">
         <div class="title left" style="font-size: 20px">
           Backup and restore:
-        </div>    
+        </div>
         <form method="get" action="backup.php" class="submit" style="font-weight: bold">
           <input type="hidden" name="action" value="backup">
           <span style="color:#555;font-size: 15px">Backup:</span> download a snapshot of the QuickSlots database that can be restored later :&nbsp;
@@ -365,7 +369,7 @@ if($_POST)
           <br>
           <div class="row">
             <div class="cell disabled">Disabled</div>
-          </div>   
+          </div>
         </div>
         <br>
         Click on a slot to disable or enable it

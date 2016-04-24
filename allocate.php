@@ -150,6 +150,15 @@ HTML;
   <script>
   $(function()
   {
+    $("#scheduler").click(function(e) {
+      e.preventDefault();
+
+      $(this).prop('disabled', true);
+      $(this).css({'background': 'grey', 'color': 'white'});
+      $("#schedulerWorker").css('visibility', 'visible');
+      window.location = 'scheduler/schedule.php';
+    });
+
     $("#main_menu a").each(function() {
       if($(this).prop('href') == window.location.href || window.location.href.search($(this).prop('href'))>-1)
       {
@@ -364,6 +373,10 @@ HTML;
     </ul>
   </div>
   <div id="content" style="padding:15px 0 0 15px;overflow-x: visible">
+    <div class="center">
+      <button id="scheduler">Auto Allocate</button>
+      <img id="schedulerWorker" src="images/loader_green.gif" style="visibility:hidden;"></img>
+    </div>
     <div class="tableContainer">
       <div class="title" style="margin-top:-15px">
         <span class="inline" style="vertical-align: middle;padding-top:10px">Timetable:</span>
