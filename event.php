@@ -1,17 +1,19 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
+
 require_once('connect_db.php');
 
-
 session_start();
-define('CLIENT_SECRET_PATH', __DIR__ . '/client_secrets.json');
+
+define('CLIENT_SECRET_PATH', __DIR__ . '/client_secret.json');
 define('SCOPES', implode(' ', array(
   Google_Service_Calendar::CALENDAR)
 ));
-
+// $_SESSION['uName'] = 'arjun';
+printf("HERE %s",$_SESSION['uName']);
 if(!isset($_SESSION['faculty']))
   $_SESSION['faculty'] = $_SESSION['uName'];
-
+ // echo $_SESSION['faculty'];
 function getClient() {
   $client = new Google_Client();
   $client->setScopes(SCOPES);
@@ -29,6 +31,7 @@ function getClient() {
 }
 
 function updateDB($id_list) {
+    global $db;
   $query_string = "SELECT COUNT(*) AS count FROM events where fac_id = ?";
   $query = $db->prepare($query_string);
   $query->execute([$_SESSION['faculty']]);
@@ -61,10 +64,23 @@ function add_events($event_array, $service) {
 }
 
 function delete_events($fac_id, $service) {
+    global $db;
+  //   if(empty($db )) {
+  //       echo "db not defined";
+  //   }
+  //   else {
+  //       echo var_dump($db);
+  //       echo "found!";
+  //   }
+  //   $q = $db->query('SELECT * from courses limit 1');
+  //   echo "q= ". $q;
+  //   if(empty($q ))
+  //       echo "$q not defined";
   // $fac_id = mysql_real_escape_string($fac_id);
   $query_string = "select * from events where fac_id=?";
   $query = $db->prepare($query_string);
   $query->execute([$_SESSION['faculty']]);
+
   while($id_list = $query->fetch()){
 
       $id_arr = explode(',', $id_list['event_id']);
