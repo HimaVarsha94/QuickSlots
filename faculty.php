@@ -91,10 +91,7 @@ if(!sessionCheck('level','faculty'))
               <li class="limenu"><a href="manage.php?action=slot_groups">Manage Slot Groups</a></li>';
     ?>
               <li class="limenu"><a href="faculty.php">Manage Courses</a></li>
-             <?php
-             if(!sessionCheck('level','dean'))
-                    echo '<li class="limenu"><a href="addpreference.php">Add Preferences</a></li>';
-              ?>
+            <li class="limenu"><a href="addpreference.php">Add Preferences</a></li>
 
               <li class="limenu"><a href="allocate.php">Allocate Timetable</a></li>
               <li class="limenu"><a href="./">View Timetable</a></li>
