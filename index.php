@@ -45,6 +45,19 @@ if(!empty($_GET['batch']))
         }
       });
 
+      // re-render the PNG if filters changed
+      $("#table_name,#department,#faculty,#batch").change(function() {
+        console.log('changed');
+        html2canvas([document.getElementById('timetable')], {
+          onrendered: function (canvas) {
+            var data = canvas.toDataURL('image/png');
+            $('#savepng')
+              .attr('href', data)
+              .attr('download', 'timetable.png');
+          }
+        });
+      });
+
       $("#main_menu a").each(function() {
         if($(this).prop('href') == window.location.href || window.location.href.search($(this).prop('href'))>-1)
         {
