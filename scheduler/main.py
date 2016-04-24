@@ -11,7 +11,7 @@ MAX_PREFERENCE_COUNT = 3
 
 def schedule():
     # connect to the database
-    host = "127.0.0.1"
+    host = os.getenv("DB_HOST", "127.0.0.1")
     port = 3306
     user = "root"
     passwd = "abc123"

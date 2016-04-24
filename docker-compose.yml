@@ -20,6 +20,8 @@ services:
       - "4000:80"
     volumes:
       - "./:/app"
+    environment:
+      DB_HOST: 192.168.99.100
 
   adminer:
       depends_on:
