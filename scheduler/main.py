@@ -6,6 +6,7 @@ import json
 import itertools
 import sys
 import time
+import os
 
 MAX_PREFERENCE_COUNT = 3
 
