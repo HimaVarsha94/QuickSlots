@@ -206,6 +206,5 @@ if(!sessionCheck('level','faculty'))
         </div>
     </div>
   </div>
-  <div id="footer">Powered by <a href="https://github.com/0verrider/QuickSlots">QuickSlots v1.0</a></div>
 </body>
 </html>

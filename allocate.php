@@ -446,7 +446,6 @@ HTML;
         }
         ?>
       </div>
-      <div id="footer" style="position: relative">Powered by <a href="https://github.com/0verrider/QuickSlots">QuickSlots v1.0</a></div>
     </div>
     <div id="rightpane" style="width: 235px;margin-left:10px">
     <?php if(!sessionCheck('level','faculty')) : ?>

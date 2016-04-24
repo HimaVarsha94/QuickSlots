@@ -309,7 +309,6 @@ if(!empty($_GET['batch']))
         </a>
         <?php endif;?>
       </div>
-      <div id="footer" style="position: relative">Powered by <a href="https://github.com/0verrider/QuickSlots">QuickSlots v1.0</a></div>
     </div>
     <div id="rightpane">
       <div class="title stretch" style="padding:40px 0 10px 0">Course Details</div>

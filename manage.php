@@ -558,6 +558,5 @@ require_once ('connect_db.php');
     </div>
   <?php endif; ?>
   </div>
-  <div id="footer">Powered by <a href="https://github.com/0verrider/QuickSlots">QuickSlots v1.0</a></div>
 </body>
 </html>

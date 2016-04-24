@@ -336,7 +336,6 @@ if($_POST)
           <button>Restore</button>
         </form>
       </div>
-      <div id="footer" style="position: relative">Powered by <a href="https://github.com/0verrider/QuickSlots">QuickSlots v1.0</a></div>
     </div>
     <div class="inline" style="width: 250px;margin: 0 0 0 2px">
       <div class="box" style="margin-top:15px;width: 250px;background-size: 250px 9px, 250px 16px">

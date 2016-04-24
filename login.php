@@ -18,7 +18,7 @@ if($_POST)
     $faculty = $query->fetch();
     if(!$faculty)
       postResponse("error", "Username is not registered!");
-    if($faculty['pswd'] == pwdHash($uName, $_POST['pswd']) || 
+    if($faculty['pswd'] == pwdHash($uName, $_POST['pswd']) ||
        @ldap_bind(ldap_connect($config['ldap_host']), "uid=$uName," . $config['ldap_dn'],$_POST['pswd']))
     {
       $_SESSION['logged_in'] = true;
@@ -73,7 +73,6 @@ if(sessionCheck('logged_in'))
       </form>
     </div>
   </div>
-  <div id="footer" style="margin:0">Powered by <a href="https://github.com/0verrider/QuickSlots">QuickSlots v1.0</a></div>
 </body>
 
 </html>
