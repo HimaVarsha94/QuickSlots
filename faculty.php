@@ -67,6 +67,10 @@ if(!sessionCheck('level','faculty'))
         $(this).siblings('input[name="cRCount"]').val(rCount);
         $(this).siblings('input[name="cType"]').val(cType);
       });
+
+      $('#topmenu').click(function() {
+        $('#nav_bar').toggle();
+      });
   })
   </script>
 </head>
@@ -76,7 +80,10 @@ if(!sessionCheck('level','faculty'))
       <div class="infoTab"><div class="fixer"></div><div class="dashIcon usr"></div><div id="fName"><?=$_SESSION['fName']?></div></div>
       <div class="infoTab"><div class="fixer"></div><a href="logout.php" id="logout"><div class="dashIcon logout"></div><div>Logout</div></a></div>
     </div>
-    <div id="header_text">QuickSlots v1.0</div>
+    <div id="header_text" style="box-sizing:border-box;padding:5px;">
+      <img id="topmenu" src="images/information.png" style="height:30px;width:auto;float:left;margin-top:3px;margin-left:15px;cursor:pointer;"></img>
+      <p style="float:left;margin-top:-5px;margin-left:15px;">QuickSlots</p>
+    </div>
   </div>
   <div id="shadowhead">Manage Courses</div>
   <div id="nav_bar">

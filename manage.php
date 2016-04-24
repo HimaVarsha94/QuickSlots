@@ -41,6 +41,10 @@ require_once ('connect_db.php');
       $("#fac_level").change(function(){
         $("input[value="+ $("option:selected",this).attr('class') +"]",this.parentNode).attr('checked','checked');
       })
+
+      $('#topmenu').click(function() {
+        $('#nav_bar').toggle();
+      });
   })
   </script>
 </head>
@@ -51,7 +55,10 @@ require_once ('connect_db.php');
       <div class="infoTab"><div class="fixer"></div><div class="dashIcon usr"></div><div id="fName"><?=$_SESSION['fName']?></div></div>
       <div class="infoTab"><div class="fixer"></div><a href="logout.php" id="logout"><div class="dashIcon logout"></div><div>Logout</div></a></div>
     </div>
-    <div id="header_text">QuickSlots v1.0</div>
+    <div id="header_text" style="box-sizing:border-box;padding:5px;">
+      <img id="topmenu" src="images/information.png" style="height:30px;width:auto;float:left;margin-top:3px;margin-left:15px;cursor:pointer;"></img>
+      <p style="float:left;margin-top:-5px;margin-left:15px;">QuickSlots</p>
+    </div>
   </div>
   <div id="shadowhead"></div>
   <div id="nav_bar">
@@ -162,7 +169,7 @@ require_once ('connect_db.php');
   <?php elseif(valueCheck('action','slot_groups')) : ?>
     <div class="box">
       <div class="boxbg"></div>
-      <div class="avatar"><div class="icon add"></div></div>
+      <div class="information"><div class="icon add"></div></div>
       <div class="title">Add Slot Group</div>
       <div class="elements">
         <form method="post" action="slot_groups.php?action=add" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
@@ -273,7 +280,7 @@ require_once ('connect_db.php');
     </div>
     <div class="box">
       <div class="boxbg"></div>
-      <div class="avatar"><div class="icon key"></div></div>
+      <div class="information"><div class="icon key"></div></div>
       <div class="title">Edit Slot Group</div>
       <div class="elements">
         <form method="post" action="slot_groups.php?action=edit" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
@@ -390,7 +397,7 @@ require_once ('connect_db.php');
     </div>
     <div class="box">
       <div class="boxbg"></div>
-      <div class="avatar"><div class="icon remove"></div></div>
+      <div class="information"><div class="icon remove"></div></div>
       <div class="title">Delete Slot Group</div>
       <div class="elements">
         <form method="post" action="slot_groups.php?action=delete" class="confirm" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">

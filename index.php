@@ -156,6 +156,10 @@ if(!empty($_GET['batch']))
       var queryString = $("#filters :input[value!='']").serialize();
       if(queryString)
         $("#sharelink").val(location.origin+location.pathname+'?'+queryString);
+
+      $('#topmenu').click(function() {
+        $('#nav_bar').toggle();
+      });
   })
   </script>
   <?php if(sessionCheck('logged_in')):?>
@@ -199,7 +203,7 @@ if(!empty($_GET['batch']))
   <?php endif;?>
 </head>
 
-<body style="min-width: 1348px">
+<body>
   <div id="header">
     <div id="account_info">
     <?php if(sessionCheck('logged_in')):?>
@@ -209,7 +213,10 @@ if(!empty($_GET['batch']))
       <div class="infoTab"><div class="fixer"></div><a href="login.php"><div class="dashIcon logout"></div><div>Login</div></a></div>
     <?php endif; ?>
     </div>
-    <div id="header_text">QuickSlots v1.0</div>
+    <div id="header_text" style="box-sizing:border-box;padding:5px;">
+      <img id="topmenu" src="images/information.png" style="height:30px;width:auto;float:left;margin-top:3px;margin-left:15px;cursor:pointer;"></img>
+      <p style="float:left;margin-top:-5px;margin-left:15px;">QuickSlots</p>
+    </div>
   </div>
   <div id="shadowhead">View Timetable</div>
   <?php if(sessionCheck('logged_in')):?>
@@ -292,44 +299,36 @@ if(!empty($_GET['batch']))
     </div>
     <div class="tableContainer" >
       <div class="table consolidated" id="timetable"></div>
-      <div id="legend" class="left" style="position:static;padding:5px 0 10px 0;margin:0">
-        <div class="title inline" style="margin-bottom:-5px">Legend:</div>
-        <div class="table" style="margin: 0 0 10px 10px;width:350px">
-          <div class="cell" style="margin: 0 10px 0 0">Free</div>
-          <div style="display:table-cell;width:20px"></div>
-          <div class="cell disabled">Disabled</div>
-        </div>
-        <span style="line-height: 25px" class="guidelines">
-          &#9679; Select at least one filter to view the timetable
-        </span>
+    </div>
+    <br>
+    <div>
+      <div id="rightpane" style="float:left;">
+        <div class="title stretch" style="padding:15px 0 15px 0">Course Details</div>
+        <table id="course_info">
+          <tr class="course_name">
+            <th>Course</th><td rowspan="4" style="color:#999">&#9679; Click on a course to show details</td>
+          </tr>
+          <tr class="fac_name">
+            <th>Faculty</th>
+          </tr>
+          <tr class="room">
+            <th>Room</th>
+          </tr>
+          <tr class="batches">
+            <th>Batches</th>
+          </tr>
+        </table>
       </div>
-      <div class="inline" style="float: right;text-align: center">
-        <div id="share" class="title" style="margin:0;padding: 5px 0 19px 0"><span class="inline" style="vertical-align: middle">Share:</span>
-        <textarea id="sharelink" style="vertical-align: middle;width:420px;height: 35px;resize:none" readonly onclick="this.focus;this.select()"></textarea>
-        </div>
+      <div id="share" class="title" style="margin-left:50px;display:inline;float:left;">
+        <p>Share</p>
+        <textarea id="sharelink" style="width:300px;height:40px;resize:none;" readonly onclick="this.focus;this.select()"></textarea>
+        <br>
         <?php if(sessionCheck('logged_in')): ?>
         <a id="savepng">
           <button>Save as PNG</button>
         </a>
         <?php endif;?>
       </div>
-    </div>
-    <div id="rightpane">
-      <div class="title stretch" style="padding:40px 0 10px 0">Course Details</div>
-      <table id="course_info">
-        <tr class="course_name">
-          <th>Course</th><td rowspan="4" style="color:#999">&#9679; Click on a course to show details</td>
-        </tr>
-        <tr class="fac_name">
-          <th>Faculty</th>
-        </tr>
-        <tr class="room">
-          <th>Room</th>
-        </tr>
-        <tr class="batches">
-          <th>Batches</th>
-        </tr>
-      </table>
     </div>
     <div id="disabledSlots">
       <?php

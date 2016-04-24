@@ -127,8 +127,6 @@ if($_POST)
   <title>QuickSlots</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <link rel="stylesheet" type="text/css" href="css/dashboard.css">
   <link rel="stylesheet" type="text/css" href="css/table.css">
@@ -140,15 +138,6 @@ if($_POST)
   <script type="text/javascript">
   $(function()
   {
-      $("#main_menu a").each(function() {
-          if($(this).prop('href') == window.location.href || window.location.href.search($(this).prop('href'))>-1)
-          {
-              $(this).parent().addClass('current');
-              document.title+= " | " + this.innerHTML;
-              $(this).click(function(){return false;})
-              return false;
-          }
-      })
       $("option[value='<?=$current['table_name']?>']","#table_name").attr('selected','selected');
       $("#table_name").chosen({
         no_results_text: 'No timetable named ',
@@ -206,17 +195,24 @@ if($_POST)
         return message;
       }
     }
+
+    $('#topmenu').click(function() {
+      $('#nav_bar').toggle();
+    });
   })
   </script>
 </head>
 
-<body style="min-width: 1348px">
+<body>
   <div id="header">
     <div id="account_info">
       <div class="infoTab"><div class="fixer"></div><div class="dashIcon usr"></div><div id="fName"><?=$_SESSION['fName']?></div></div>
       <div class="infoTab"><div class="fixer"></div><a href="logout.php" id="logout"><div class="dashIcon logout"></div><div>Logout</div></a></div>
     </div>
-    <div id="header_text">QuickSlots v1.0</div>
+    <div id="header_text" style="box-sizing:border-box;padding:5px;">
+      <img id="topmenu" src="images/information.png" style="height:30px;width:auto;float:left;margin-top:3px;margin-left:15px;cursor:pointer;"></img>
+      <p style="float:left;margin-top:-5px;margin-left:15px;">QuickSlots</p>
+    </div>
   </div>
   <div id="shadowhead">Manage Timetables</div>
   <div id="nav_bar">
