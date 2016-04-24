@@ -1,6 +1,15 @@
 FROM activatedgeek/nginx-php:latest
 
-MAINTAINER StoryXpress API <Sanyam Kapoor "sanyam@storyxpress.co">
+MAINTAINER Sanyam Kapoor "1sanyamkapoor@gmail.com"
+
+RUN apt-get -y update &&\
+  apt-get install -y python-pip &&\
+  pip install PyMySQL==0.7.2 munkres==1.0.7 &&\
+  apt-get autoremove -y &&\
+  apt-get clean &&\
+  apt-get autoclean &&\
+  rm -rf /var/lib/apt/lists/* &&\
+  rm -rf /usr/share/man/*
 
 # Add source code and configs
 ADD ./config/site.conf /etc/nginx/sites-available/default

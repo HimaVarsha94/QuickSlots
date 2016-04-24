@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from munkres import Munkres, print_matrix, make_cost_matrix
 import pymysql
 import json
