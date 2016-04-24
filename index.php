@@ -241,7 +241,8 @@ if(!empty($_GET['batch']))
         <?php if(sessionCheck('logged_in')): ?>
           <div class="title">
             <span class="inline" style="vertical-align: middle;padding-top:10px">Timetable:</span>
-            <select id="table_name" name="table" style="width: 170px" data-placeholder="Add a timetable...">
+            <select id="table_name" name="table" style="width: 170px" data-placeholder="Choose a timetable...">
+              <option label="Choose a timetable.."></option>
               <?php
                 foreach($db->query('SELECT * FROM timetables') as $timetable)
                 {
