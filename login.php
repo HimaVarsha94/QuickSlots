@@ -54,7 +54,7 @@ if(sessionCheck('logged_in'))
   <script src="js/form.js"></script>
 </head>
 
-<body class="center">
+<body class="center" background="images/login-bg.png">
   <div class="vspacer"></div>
   <div class="box middle">
     <div class="boxbg"></div>
