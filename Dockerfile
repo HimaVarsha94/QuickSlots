@@ -5,6 +5,7 @@ MAINTAINER Sanyam Kapoor "1sanyamkapoor@gmail.com"
 RUN apt-get -y update &&\
   apt-get install -y python-pip &&\
   pip install PyMySQL==0.7.2 munkres==1.0.7 &&\
+  composer install &&\
   apt-get autoremove -y &&\
   apt-get clean &&\
   apt-get autoclean &&\

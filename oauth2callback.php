@@ -15,7 +15,6 @@ $client = getClient();
 
 if (! isset($_GET['code'])) {
   $auth_url = $client->createAuthUrl();
-  printf('Here');
   header('Location: ' . filter_var($auth_url, FILTER_SANITIZE_URL));
 } else {
   $client->authenticate($_GET['code']);

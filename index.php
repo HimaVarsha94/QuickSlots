@@ -344,6 +344,11 @@ if(!empty($_GET['batch']))
           <button>Save as PNG</button>
         </a>
         <?php endif;?>
+        <?php if(sessionCheck('logged_in')): ?>
+        <a id="gagenda" href="/ouath2callback.php">
+          <button>Add to Calendar</button>
+        </a>
+        <?php endif;?>
       </div>
     </div>
     <div id="disabledSlots">
