@@ -1,11 +1,16 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
+require_once('connect_db.php');
+
 
 session_start();
 define('CLIENT_SECRET_PATH', __DIR__ . '/client_secrets.json');
 define('SCOPES', implode(' ', array(
   Google_Service_Calendar::CALENDAR)
 ));
+
+if(!isset($_SESSION['faculty']))
+  $_SESSION['faculty'] = $_SESSION['uName'];
 
 function getClient() {
   $client = new Google_Client();
@@ -24,15 +29,23 @@ function getClient() {
 }
 
 function updateDB($id_list) {
-  $query = "SELECT COUNT(*) FROM events where fac_id = 'subruk'";
-  $retval = mysql_query($query);
-  $count = mysql_fetch_array( $retval );
-  if($count['COUNT(*)']==='0')
-    $query = "INSERT INTO events VALUES('subruk', '$id_list')";
-  else 
-    $query = "update events set eventID='$id_list' where fac_id='1'";
-  mysql_query($query);
-  printf("Updated db \n");
+  $query_string = "SELECT COUNT(*) AS count FROM events where fac_id = ?";
+  $query = $db->prepare($query_string);
+  $query->execute([$_SESSION['faculty']]);
+  while($count = $query->fetch()){
+      if($count['count']==='0'){
+        $query_string = "INSERT INTO events VALUES('?', '?')";
+        $query = $db->prepare($query_string);
+        $query->execute([$_SESSION['faculty'],$id_list]);
+        }
+      else{
+        $query_string = "update events set eventID=? where fac_id=?";
+        $query = $db->prepare($query_string);
+        $query->execute([$id_list,$_SESSION['faculty']]);
+        }
+
+      printf("Updated db \n");
+  }
 }
 
 function add_events($event_array, $service) {
@@ -41,43 +54,48 @@ function add_events($event_array, $service) {
     $event = $service->events->insert('primary', $event);
     $id_list .= ',' . $event->getId();
   }
-  $id_list = mysql_real_escape_string($id_list);
+  // $id_list = mysql_real_escape_string($id_list);
   //updating the events table with the latest event IDs added to the google calender
   updateDB($id_list);
   printf("added events \n");
 }
 
 function delete_events($fac_id, $service) {
-  $fac_id = mysql_real_escape_string($fac_id);
-  $query = "select * from events where fac_id='subruk'";
-  $retval = mysql_query($query);
-  $id_list = mysql_fetch_array( $retval );
-  $id_arr = explode(',', $id_list['event_id']);
-  print_r($id_arr);
-  foreach ($id_arr as &$values)
-      if ($values!='')
-        $service->events->delete('primary', $values);
+  // $fac_id = mysql_real_escape_string($fac_id);
+  $query_string = "select * from events where fac_id=?";
+  $query = $db->prepare($query_string);
+  $query->execute([$_SESSION['faculty']]);
+  while($id_list = $query->fetch()){
+
+      $id_arr = explode(',', $id_list['event_id']);
+    //   print_r($id_arr);
+      foreach ($id_arr as &$values)
+          if ($values!='')
+            $service->events->delete('primary', $values);
+    }
 }
 
 $client = getClient();
 $service = new Google_Service_Calendar($client);
 
 
-$username="root";
-$password="123";
-$database="quickslots";
-
-mysql_connect(localhost,$username,$password);
-@mysql_select_db($database) or die( "Unable to select database");
+// $username="root";
+// $password="123";
+// $database="quickslots";
+//
+// mysql_connect(localhost,$username,$password);
+// @mysql_select_db($database) or die( "Unable to select database");
 
 //delete the previously synced caleder
-$fac_id = 'subruk';
-$fac_id = mysql_real_escape_string($fac_id);
+// $fac_id = 'subruk';
+// $fac_id = mysql_real_escape_string($fac_id);
 
-delete_events($fac_id, $service);
+delete_events($_SESSION['faculty'], $service);
 
-$query="select A.course_id, course_name, day, slot_num, room, table_name  from courses as A join slot_allocs as B where A.course_id=B.course_id and A.fac_id='$fac_id'";
-$retval = mysql_query($query);
+$query_string="select A.course_id, course_name, day, slot_num, room, table_name  from courses as A join slot_allocs as B where A.course_id=B.course_id and A.fac_id=?";
+$query = $db->prepare($query_string);
+$query->execute([$_SESSION['faculty']]);
+$retval = $query->fetch();
 
 
 // semester starting date
@@ -90,7 +108,7 @@ if($semStartMonth<=4){
 }
 else{
   $semStartMonth = 8;
-  $semEndMonth = 11;  
+  $semEndMonth = 11;
 }
 $year = date('Y');
 
@@ -112,7 +130,7 @@ $slot_mapping = array(
 
 $event_array = array();
 
-while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
+while($row = $query->fetch())
 {
   $dayOffset = $row['day']-$semStartDay;
   if ($dayOffset<0)
@@ -159,6 +177,6 @@ while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
 }
 
 //add events to calendar
-$event_array=array();
+// $event_array=array();
 add_events($event_array, $service);
-mysql_close();
+// mysql_close();
