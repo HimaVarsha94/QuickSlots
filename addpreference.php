@@ -463,7 +463,7 @@ HTML;
 </head>
 
 <body style="min-width: 1347px;">
-  <div id="shadowhead">Add Preferences</div>
+  <div id="shadowhead"></div>
   <div id="header">
     <div id="account_info">
       <div class="infoTab"><div class="fixer"></div><div class="dashIcon usr"></div><div id="fName"><?=$_SESSION['fName']?></div></div>
@@ -491,9 +491,14 @@ HTML;
     </ul>
   </div>
   <div id = "content" >
-      <form name = "preferencesForm" action = "preferences.php" method = "post" class="confirm">
-          <span class="inline" style="vertical-align: middle;padding-top:10px">Course ID</span>
-          <select id = "courseId" name="course_id" style="width: 170px" data-placeholder = " Select Course" required>
+      <div class="center">
+      <div class="box">
+        <div class="boxbg"></div>
+        <div class = "information"><div class="add icon"></div></div>
+        <div class="title">Add Preference</div>
+        <div class = "center">
+       <form name = "preferencesForm" action = "preferences.php" method = "post" class="confirm">
+          <select id = "courseId" class = "center stretch" name="course_id" style="width: 170px" data-placeholder = " Select Course" required>
           	<option label = " Select Course"></option>
               <?php
                 $query = $db->prepare('SELECT course_id,type FROM courses WHERE fac_id = ?');
@@ -512,50 +517,46 @@ HTML;
             }
             echo '</script>';
            ?>
-          <div class = " preferencesClass" id = "preference1">
-              <span class="inline" style="vertical-align: middle;padding-top:10px">Time of the Day</span>
+          <div class = " preferencesClass" id = "preference1" style = "margin:5px ">
+              <span class="inline" style="vertical-align: middle;padding-top:10px"><b></span></br>
               <input type = "radio" name = "session1" value = "anytime" checked>Any Time
               <input type="radio" name="session1" value="morning" > Morning
               <input type="radio" name="session1" value="evening"> Evening <br/>
-              <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 1</span>
+              <span class="inline" style="vertical-align: middle;padding-top:10px"></span>
 
               <select class="stretch updateSelect" id = "course_slot1" name="course_slot1" style="width: 170px" data-placeholder = " Select Slot">
               	<option value="select_slot" label = " Select Slot"></option>
 
               </select> <br/>
           </div>
-          <div class = " preferencesClass" id = "preference2">
-              <span class="inline" style="vertical-align: middle;padding-top:10px">Time of the Day</span>
+          <div class = " preferencesClass" id = "preference2" style = "margin:5px 5px">
               <input type = "radio" name = "session2" value = "anytime" checked>Any Time
               <input type="radio" name="session2" value="morning" > Morning
               <input type="radio" name="session2" value="evening"> Evening <br/>
-              <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 2</span>
-
               <select class="stretch updateSelect" id = "course_slot2" name="course_slot2" style="width: 170px" data-placeholder = " Select Slot">
                 <option value="select_slot" label = " Select Slot"></option>
 
               </select> <br/>
-          </div>
-          <div class = " preferencesClass" id = "preference3">
-              <span class="inline" style="vertical-align: middle;padding-top:10px">Time of the Day</span>
+        </div>
+          <div class = " preferencesClass" id = "preference3" style = "margin:5px 5px ">
               <input type = "radio" name = "session3" value = "anytime" checked>Any Time
               <input type="radio" name="session3" value="morning" > Morning
               <input type="radio" name="session3" value="evening"> Evening <br/>
-              <span class="inline" style="vertical-align: middle;padding-top:10px">Preference 3</span>
               <select class="stretch updateSelect" id = "course_slot3" name="course_slot3" style="width: 170px" data-placeholder = " Select Slot">
                 <option value="select_slot"  label = "Select Slot"></option>
-
               </select> <br/>
         </div>
         <input type="hidden" id="confirm_msg" value="Are you sure you want to submit the preferences?">
         <p class="info"></p>
-        <button type="submit" value="Submit">Submit</button>
-      </form>
-  </div>
+        <div class = "center button">
+        <button>Submit</button></div>
+        </form>
+    </div>
+    </div>
 
   <div class="box">
     <div class="boxbg"></div>
-    <div class="avatar"><div class="icon remove"></div></div>
+    <div class = "information"><div class="icon remove"></div></div>
     <div class="title">Delete Preference</div>
     <div class="elements">
       <form method="post" action="preferences.php?action=del" class="confirm">
@@ -576,7 +577,12 @@ HTML;
           <button>Delete</button>
         </div>
       </form>
-    </div>
   </div>
+  </div>
+    </div>
+</div>
+
+
+
 </body>
 </html>
