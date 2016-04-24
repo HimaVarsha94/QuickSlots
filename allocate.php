@@ -154,6 +154,12 @@ HTML;
       $('#nav_bar').toggle();
     });
 
+    $(document).click(function(e) {
+      if (e.target.id != 'nav_bar' && e.target.id != 'topmenu') {
+        $('#nav_bar').hide();
+      }
+    });
+
     $("#scheduler").click(function(e) {
       e.preventDefault();
 
@@ -371,7 +377,7 @@ HTML;
             <li class="limenu"><a href="manage.php?action=slot_groups">Manage Slot Groups</a></li>';
     ?>
             <li class="limenu"><a href="faculty.php">Manage Courses</a></li>
-            <li class="limenu"><a href="addpreference.php">Add Preferences</a></li>
+            <li class="limenu"><a href="addpreference.php">Manage Preferences</a></li>
             <li class="limenu"><a href="allocate.php">Allocate Timetable</a></li>
             <li class="limenu"><a href="./">View Timetable</a></li>
     </ul>

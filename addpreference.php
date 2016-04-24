@@ -272,6 +272,12 @@ HTML;
     $('#topmenu').click(function() {
       $('#nav_bar').toggle();
     });
+
+    $(document).click(function(e) {
+      if (e.target.id != 'nav_bar' && e.target.id != 'topmenu') {
+        $('#nav_bar').hide();
+      }
+    });
  });
 
   </script>
@@ -301,7 +307,7 @@ HTML;
             <li class="limenu"><a href="manage.php?action=slot_groups">Manage Slot Groups</a></li>';
     ?>
             <li class="limenu"><a href="faculty.php">Manage Courses</a></li>
-            <li class="limenu"><a href="addpreference.php">Add Preferences</a></li>
+            <li class="limenu"><a href="addpreference.php">Manage Preferences</a></li>
     <?php
     if(sessionCheck('level','dean'))
       echo '<li class="limenu"><a href="allocate.php">Allocate Timetable</a></li>';

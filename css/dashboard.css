@@ -113,7 +113,6 @@ a
 .infoTab
 {
   font-size: 13px;
-  background: url("../images/accbg.png") no-repeat;
   border-left: 1px solid #333333;
   height: 45px;
   padding: 0 15px;
@@ -181,4 +180,7 @@ a
 *
 {
   white-space: normal;
+}
+#fName {
+  color: black;
 }
