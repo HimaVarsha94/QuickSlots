@@ -552,5 +552,31 @@ HTML;
         <button type="submit" value="Submit">Submit</button>
       </form>
   </div>
+
+  <div class="box">
+    <div class="boxbg"></div>
+    <div class="avatar"><div class="icon remove"></div></div>
+    <div class="title">Delete Preference</div>
+    <div class="elements">
+      <form method="post" action="register.php?action=preferences.php?action=del" class="confirm">
+        <select name="preference_id" class="updateSelect stretch" data-placeholder="Choose Preference..." required>
+          <option label="Choose Preference..."></option>
+          <?php
+                //$query = $db->prepare('SELECT course_id,type FROM courses WHERE fac_id = ?');
+                $query = $db->prepare('SELECT * FROM preferences WHERE course_id IN (SELECT course_id FROM courses WHERE fac_id = ?)');
+                $query -> execute([$_SESSION['faculty']]);
+                while($pref = $query->fetch()) {
+                    echo '<option value="'.$pref['id'] .'">'.$pref['course_id'] . " (" . $pref['slot_group'] . ")".'</option>';
+                }
+          ?>
+        </select>
+        <input type="hidden" id="confirm_msg" value="Are you sure you want to delete the selected faculty?">
+        <div class="blocktext info"></div>
+        <div class="center button">
+          <button>Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
