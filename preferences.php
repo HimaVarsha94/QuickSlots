@@ -21,6 +21,6 @@ else {
 	    $query -> execute([$_POST["course_id"], $_POST["course_slot2"]]);
 	if(isset($_POST["course_slot3"]) && $_POST["course_slot3"] != "select_slot")
 	    $query -> execute([$_POST["course_id"], $_POST["course_slot3"]]);
-        postResponse("addOpt","Preferences Added","[]");
+        postResponse("addOpt","Preferences Added",[]);
 }
  ?>

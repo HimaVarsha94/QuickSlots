@@ -76,7 +76,7 @@ $(function(){
                     if(reply[0]=="addOpt")
                     {
                         var opt = JSON.parse(reply[2]);
-                        if(opt!=[]){
+                        if(opt.length>0){
                             var val =opt[1];
                             // if(opt[])
                             if(reply[1]=="Room Added" || reply[1]=="Batch Added")
