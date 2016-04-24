@@ -11,12 +11,15 @@ if(!sessionCheck('level','dean'))
   die();
 if(valueCheck('action','add'))
 {
-  $var = "[[" . $_POST['add_slot_1_day'] . "," . $_POST['add_slot_1_range'] . "]";
+  $range = explode(",", $_POST['add_slot_1_range']);
+  $var = "[[\"{$_POST['add_slot_1_day']}\",\"{$range[0]}\",\"{$range[1]}\"]";
   if($_POST['add_slot_2_day']!='') {
-    $var = $var . ",[" . $_POST['add_slot_2_day'] . "," . $_POST['add_slot_2_range'] . "]";
+    $range = explode(",", $_POST['add_slot_2_range']);
+    $var = "{$var},[\"{$_POST['add_slot_2_day']}\",\"{$range[0]}\",\"{$range[1]}\"]";
   }
   if($_POST['add_slot_3_day']!='') {
-    $var = $var . ",[" . $_POST['add_slot_3_day'] . "," . $_POST['add_slot_3_range'] . "]";
+    $range = explode(",", $_POST['add_slot_3_range']);
+    $var = "{$var},[\"{$_POST['add_slot_3_day']}\",\"{$range[0]}\",\"{$range[1]}\"]";
   }
   $var = $var . "]";
 
@@ -36,12 +39,15 @@ if(valueCheck('action','add'))
 }
 if(valueCheck('action','edit'))
 {
-  $var = "[[" . $_POST['edit_slot_1_day'] . "," . $_POST['edit_slot_1_range'] . "]";
+  $range = explode(",", $_POST['edit_slot_1_range']);
+  $var = "[[\"{$_POST['edit_slot_1_day']}\",\"{$range[0]}\",\"{$range[1]}\"]";
   if($_POST['edit_slot_2_day']!='') {
-    $var = $var . ",[" . $_POST['edit_slot_2_day'] . "," . $_POST['edit_slot_2_range'] . "]";
+    $range = explode(",", $_POST['edit_slot_2_range']);
+    $var = "{$var},[\"{$_POST['edit_slot_2_day']}\",\"{$range[0]}\",\"{$range[1]}\"]";
   }
   if($_POST['edit_slot_3_day']!='') {
-    $var = $var . ",[" . $_POST['edit_slot_3_day'] . "," . $_POST['edit_slot_3_range'] . "]";
+    $range = explode(",", $_POST['edit_slot_3_range']);
+    $var = "{$var},[\"{$_POST['edit_slot_3_day']}\",\"{$range[0]}\",\"{$range[1]}\"]";
   }
   $var = $var . "]";
 
