@@ -44,7 +44,7 @@ def schedule():
             'edge_weights': []}
 
     # extract all the preferences
-    query = "SELECT * from preferences1"
+    query = "SELECT * from preferences"
     result = None
     with conn.cursor() as cursor:
         cursor.execute(query)

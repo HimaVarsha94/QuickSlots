@@ -146,17 +146,6 @@ if(!empty($_GET['batch']))
   })
   </script>
   <?php if(sessionCheck('logged_in')):?>
-  <script type="text/javascript">
-  $(function(){
-    var inputs=$("input","#download");
-    var filters =$("#filters :input[value!='']");
-    for(i=0;i<filters.length;i++)
-      inputs[0].value+=filters[i].name+"="+filters[i].value+"&";
-    inputs[1].value = filters[0].value;
-    for(i=1;i<filters.length;i++)
-      inputs[1].value+='_'+filters[i].value.replace(' : ',' ');
-  })
-  </script>
   <?php else:?>
   <style type="text/css">
     body{
