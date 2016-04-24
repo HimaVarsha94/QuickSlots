@@ -43,5 +43,6 @@ Temporary Items
 .apdisk
 
 config.php
+.mariadb/
 
 pybin
