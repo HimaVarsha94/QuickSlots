@@ -558,7 +558,7 @@ HTML;
     <div class="avatar"><div class="icon remove"></div></div>
     <div class="title">Delete Preference</div>
     <div class="elements">
-      <form method="post" action="register.php?action=preferences.php?action=del" class="confirm">
+      <form method="post" action="preferences.php?action=del" class="confirm">
         <select name="preference_id" class="updateSelect stretch" data-placeholder="Choose Preference..." required>
           <option label="Choose Preference..."></option>
           <?php
