@@ -9,8 +9,7 @@ define('CLIENT_SECRET_PATH', __DIR__ . '/client_secret.json');
 define('SCOPES', implode(' ', array(
   Google_Service_Calendar::CALENDAR)
 ));
-// $_SESSION['uName'] = 'arjun';
-printf("HERE %s",$_SESSION['uName']);
+
 if(!isset($_SESSION['faculty']))
   $_SESSION['faculty'] = $_SESSION['uName'];
  // echo $_SESSION['faculty'];
@@ -37,18 +36,17 @@ function updateDB($id_list) {
   $query->execute([$_SESSION['faculty']]);
   while($count = $query->fetch()){
       if($count['count']==='0'){
-        $query_string = "INSERT INTO events VALUES('?', '?')";
+        $query_string = "INSERT INTO events VALUES(?,?)";
         $query = $db->prepare($query_string);
         $query->execute([$_SESSION['faculty'],$id_list]);
-        }
+      }
       else{
         $query_string = "update events set eventID=? where fac_id=?";
         $query = $db->prepare($query_string);
         $query->execute([$id_list,$_SESSION['faculty']]);
-        }
-
-      printf("Updated db \n");
+      }
   }
+  header('Location: /');
 }
 
 function add_events($event_array, $service) {
@@ -65,46 +63,24 @@ function add_events($event_array, $service) {
 
 function delete_events($fac_id, $service) {
     global $db;
-  //   if(empty($db )) {
-  //       echo "db not defined";
-  //   }
-  //   else {
-  //       echo var_dump($db);
-  //       echo "found!";
-  //   }
-  //   $q = $db->query('SELECT * from courses limit 1');
-  //   echo "q= ". $q;
-  //   if(empty($q ))
-  //       echo "$q not defined";
-  // $fac_id = mysql_real_escape_string($fac_id);
+
   $query_string = "select * from events where fac_id=?";
   $query = $db->prepare($query_string);
   $query->execute([$_SESSION['faculty']]);
 
   while($id_list = $query->fetch()){
-
       $id_arr = explode(',', $id_list['event_id']);
-    //   print_r($id_arr);
       foreach ($id_arr as &$values)
-          if ($values!='')
-            $service->events->delete('primary', $values);
+          if ($values!='') {
+            try {
+              $service->events->delete('primary', $values);
+            } catch (Exception $e) {}
+          }
     }
 }
 
 $client = getClient();
 $service = new Google_Service_Calendar($client);
-
-
-// $username="root";
-// $password="123";
-// $database="quickslots";
-//
-// mysql_connect(localhost,$username,$password);
-// @mysql_select_db($database) or die( "Unable to select database");
-
-//delete the previously synced caleder
-// $fac_id = 'subruk';
-// $fac_id = mysql_real_escape_string($fac_id);
 
 delete_events($_SESSION['faculty'], $service);
 
@@ -193,6 +169,6 @@ while($row = $query->fetch())
 }
 
 //add events to calendar
-// $event_array=array();
 add_events($event_array, $service);
-// mysql_close();
+header('Location: /');
+?>

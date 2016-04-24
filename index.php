@@ -345,7 +345,7 @@ if(!empty($_GET['batch']))
         </a>
         <?php endif;?>
         <?php if(sessionCheck('logged_in')): ?>
-        <a id="gagenda" href="/ouath2callback.php">
+        <a href="/oauth2callback.php">
           <button>Add to Calendar</button>
         </a>
         <?php endif;?>
