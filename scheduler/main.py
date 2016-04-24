@@ -194,5 +194,7 @@ def schedule():
                     cursor.execute(query, [timetable_name, s[0], slot_num, room_temp, course_temp])
                     conn.commit()
 
+    print timetable_name
+
 if __name__ == "__main__":
     schedule()
