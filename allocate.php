@@ -375,7 +375,10 @@ HTML;
   <div id="content" style="padding:15px 0 0 15px;overflow-x: visible">
     <div class="center">
       <button id="scheduler">Auto Allocate</button>
-      <img id="schedulerWorker" src="images/loader_green.gif" style="visibility:hidden;"></img>
+      <div class="center" id="schedulerWorker" style="visibility:hidden;">
+        <img src="images/loader_green.gif"></img>
+        <p>Please hold on, it takes a few minutes for scheduler to work</p>
+      </div>
     </div>
     <div class="tableContainer">
       <div class="title" style="margin-top:-15px">
