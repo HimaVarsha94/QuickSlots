@@ -184,17 +184,14 @@ def schedule():
         for s in slots:
             slot_num_list = slot_mapping[s[1]+"-"+s[2]]
             for slot_num in slot_num_list:
-                # query = "INSERT INTO slots(`table_name`, `day`, `slot_num`, `state`) values (%s,%s,%s,%s)"
-                # with conn.cursor() as cursor:
-                #     print [timetable_name, s[0], slot_num, "active"]
-                #     cursor.execute(query, [timetable_name, s[0], slot_num, "active"])
-                #     conn.commit()
+                query = "INSERT INTO slots(`table_name`, `day`, `slot_num`, `state`) values (%s,%s,%s,%s)"
+                with conn.cursor() as cursor:
+                    cursor.execute(query, [timetable_name, s[0], slot_num, "active"])
+                    conn.commit()
                 query = "INSERT INTO slot_allocs(`table_name`, `day`, `slot_num`, `room`, `course_id`) values (%s,%s,%s,%s,%s)"
                 with conn.cursor() as cursor:
-                    print [timetable_name, s[0], slot_num, "active"]
                     cursor.execute(query, [timetable_name, s[0], slot_num, room_temp, course_temp])
                     conn.commit()
-
 
 if __name__ == "__main__":
     schedule()
