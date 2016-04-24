@@ -246,7 +246,7 @@ input[type=radio] + label
 {
   background: url(../images/radio.png) 2px -1px no-repeat;
 }
-input[type=checkbox]
+input[type=checkbox],input[type=radio]
 {
   visibility: hidden;
 }

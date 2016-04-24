@@ -352,29 +352,47 @@ HTML;
            ?>
           <div class = " preferencesClass" id = "preference1" style = "margin:5px ">
               <span class="inline" style="vertical-align: middle;padding-top:10px"><b></span></br>
-              <input type = "radio" name = "session1" value = "anytime" checked>Any Time
-              <input type="radio" name="session1" value="morning" > Morning
-              <input type="radio" name="session1" value="evening"> Evening <br/>
+                <div class="inline">
+                  <input type="radio" class="styled" name="session1" value="anytime" id="session1_anytime" checked><label for="session1_anytime">Any Time</label>
+                </div>
+                <div class="inline">
+                  <input type="radio" class="styled" name="session1" value="morning" id="session1_morning"><label for="session1_morning">Morning</label>
+                </div>
+                <div class="inline">
+                  <input type="radio" class="styled" name="session1" value="evening" id="session1_evening"><label for="session1_evening">Evening</label>
+                </div>
               <span class="inline" style="vertical-align: middle;padding-top:10px"></span>
-
               <select class="stretch updateSelect" id = "course_slot1" name="course_slot1" style="width: 170px" data-placeholder = " Select Slot">
               	<option value="select_slot" label = " Select Slot"></option>
 
               </select> <br/>
           </div>
           <div class = " preferencesClass" id = "preference2" style = "margin:5px 5px">
-              <input type = "radio" name = "session2" value = "anytime" checked>Any Time
-              <input type="radio" name="session2" value="morning" > Morning
-              <input type="radio" name="session2" value="evening"> Evening <br/>
+            <div class="inline">
+              <input type="radio" class="styled" name="session2" value="anytime" id="session2_anytime" checked><label for="session2_anytime">Any Time</label>
+            </div>
+            <div class="inline">
+              <input type="radio" class="styled" name="session2" value="morning" id="session2_morning"><label for="session2_morning">Morning</label>
+            </div>
+            <div class="inline">
+              <input type="radio" class="styled" name="session2" value="evening" id="session2_evening"><label for="session2_evening">Evening</label>
+            </div>
+              <br/>
               <select class="stretch updateSelect" id = "course_slot2" name="course_slot2" style="width: 170px" data-placeholder = " Select Slot">
                 <option value="select_slot" label = " Select Slot"></option>
 
               </select> <br/>
         </div>
           <div class = " preferencesClass" id = "preference3" style = "margin:5px 5px ">
-              <input type = "radio" name = "session3" value = "anytime" checked>Any Time
-              <input type="radio" name="session3" value="morning" > Morning
-              <input type="radio" name="session3" value="evening"> Evening <br/>
+            <div class="inline">
+              <input type="radio" class="styled" name="session3" value="anytime" id="session3_anytime" checked><label for="session3_anytime">Any Time</label>
+            </div>
+            <div class="inline">
+              <input type="radio" class="styled" name="session3" value="morning" id="session3_morning"><label for="session3_morning">Morning</label>
+            </div>
+            <div class="inline">
+              <input type="radio" class="styled" name="session3" value="evening" id="session3_evening"><label for="session3_evening">Evening</label>
+            </div>
               <select class="stretch updateSelect" id = "course_slot3" name="course_slot3" style="width: 170px" data-placeholder = " Select Slot">
                 <option value="select_slot"  label = "Select Slot"></option>
               </select> <br/>
