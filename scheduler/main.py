@@ -5,20 +5,35 @@ import pymysql
 import json
 import itertools
 import sys
+import time
+import os
 
 MAX_PREFERENCE_COUNT = 3
 
 def schedule():
     # connect to the database
-    host = "127.0.0.1"
+    host = os.getenv("DB_HOST", "127.0.0.1")
     port = 3306
     user = "root"
     passwd = "abc123"
     database = "quickslots"
     conn = pymysql.connect(host=host, port=port, user=user, passwd=passwd, db=database, cursorclass=pymysql.cursors.DictCursor)
 
-    # select * from courses where fac_id='subruk';
-    # select * from rooms join slot_groups;
+    # time mapping
+    slot_mapping = {
+        '0900-0955': [1],
+        '1000-1055': [2],
+        '1100-1155': [3],
+        '1200-1255': [4],
+        '1300-1425': [5],
+        '1430-1555': [6],
+        '1600-1725': [7],
+        '1730-1900': [8],
+        '1900-2030': [9],
+        '1430-1725': [6,7],
+        '0900-1155': [1,2,3]
+    }
+
 
     # extract batches
     query = "SELECT * FROM allowed"
@@ -89,9 +104,8 @@ def schedule():
     for slot in result:
         slots_dict[slot['id']] = {
             'tod': slot['tod'],
-            'lab': int(slot['lab'])}
-
-    conn.close()
+            'lab': int(slot['lab']),
+            'slots': json.loads(slot['slots'])}
 
     # define the right independent set for the graph
     right_nodes = [p for p in itertools.product(rooms_dict.keys(), slots_dict.keys())]
@@ -152,16 +166,35 @@ def schedule():
     for course in course_dict:
         graph.append(course_dict[course]['edge_weights'])
 
-    # cost_matrix = make_cost_matrix(graph, lambda cost: sys.maxint - cost)
+    timetable_name = time.strftime("%d-%m-%Y-%H-%M-%S")
+    query = "INSERT INTO timetables VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE `table_name` = VALUES(`table_name`)"
+    with conn.cursor() as cursor:
+        cursor.execute(query, [timetable_name, "5","9","90","09","00","AM","0","0","0"])
+        conn.commit()
+
+    # compute and store assignment for allocations
     m = Munkres()
     indexes = m.compute(graph)
-    total = 0
     for row, column in indexes:
-        value = graph[row][column]
-        total += value
-        # print '(%d, %d) -> %f' % (row, column, value)
-        print course_dict.keys()[row], right_nodes[column], value
-    # print 'total profit=%d' % total
+        # value = graph[row][column]
+        # print course_dict.keys()[row], right_nodes[column]
+        slot_group_temp = right_nodes[column][1]
+        room_temp = right_nodes[column][0]
+        course_temp = course_dict.keys()[row]
+        slots = slots_dict[slot_group_temp]['slots']
+        for s in slots:
+            slot_num_list = slot_mapping[s[1]+"-"+s[2]]
+            for slot_num in slot_num_list:
+                query = "INSERT INTO slots(`table_name`, `day`, `slot_num`, `state`) values (%s,%s,%s,%s)"
+                with conn.cursor() as cursor:
+                    cursor.execute(query, [timetable_name, s[0], slot_num, "active"])
+                    conn.commit()
+                query = "INSERT INTO slot_allocs(`table_name`, `day`, `slot_num`, `room`, `course_id`) values (%s,%s,%s,%s,%s)"
+                with conn.cursor() as cursor:
+                    cursor.execute(query, [timetable_name, s[0], slot_num, room_temp, course_temp])
+                    conn.commit()
+
+    print timetable_name
 
 if __name__ == "__main__":
     schedule()

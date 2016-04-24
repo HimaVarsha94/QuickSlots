@@ -1,4 +1,5 @@
 <?php
-  $output = shell_exec("python main.py");
-  echo "<pre>$output</pre>";
+  include('../config.php');
+  $output = shell_exec("DB_HOST={$config['db_host']} python main.py");
+  header("Location: /?department=CSE&table=$output");
 ?>
