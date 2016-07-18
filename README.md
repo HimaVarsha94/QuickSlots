@@ -70,3 +70,16 @@ To install the packages for running the scheduler, execute
 `python
   pip install -r requirements.txt
 `
+
+# Getting started with Quickslots in Docker
+
+**NOTE**: All the following installation instructions are based on an Ubuntu 14.04 LTS host.
+Except the Docker installation, all other steps can be exactly used for all Linux distributions.
+
+* Install [Docker on Ubuntu](https://docs.docker.com/engine/installation/linux/ubuntulinux/)
+* Install [Docker Compose](https://docs.docker.com/compose/install/)
+* Run `docker-compose up -d`
+* `composer` dependencies need to be installed after the containers are up via (only once):
+```
+$ docker exec quickslots_quickslots_1 composer install
+```

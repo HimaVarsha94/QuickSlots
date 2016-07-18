@@ -12,6 +12,8 @@ services:
       MYSQL_DATABASE: quickslots
 
   quickslots:
+    depends_on:
+      - mariadb
     image: activatedgeek/quickslots:latest
     build:
       context: ./
@@ -20,8 +22,10 @@ services:
       - "4000:80"
     volumes:
       - "./:/app"
+    links:
+      - mariadb:db
     environment:
-      DB_HOST: 192.168.99.100
+      DB_HOST: db
 
   adminer:
       depends_on:
